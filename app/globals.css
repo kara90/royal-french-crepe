@@ -298,6 +298,25 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+
+  /* Brand-gold native date & time pickers */
+  input[type="date"],
+  input[type="time"] {
+    accent-color: var(--gold);
+    color-scheme: light;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    /* tint the default dark icon to brushed gold */
+    filter: brightness(0) saturate(100%) invert(72%) sepia(48%) saturate(548%)
+      hue-rotate(1deg) brightness(91%) contrast(88%);
+    transition: opacity 0.2s ease;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover,
+  input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 0.7;
+  }
 }
 
 /* Respect reduced-motion — disable non-essential animation */
