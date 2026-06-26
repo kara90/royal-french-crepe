@@ -8,6 +8,7 @@ import Reveal from "./reveal";
 
 const shots = [
   { src: "/images/catering-stand.jpg", cap: "Oceanside crêpe station" },
+  { src: "/images/crepe-handheld.jpg", cap: "Folded to order" },
   { src: "/images/marie-antoinette.jpg", cap: "Marie Antoinette" },
   { src: "/images/catering-garden.jpg", cap: "Garden soirée" },
   { src: "/images/menu/caviar-1.jpg", cap: "La Royale Ossetra" },
