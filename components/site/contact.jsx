@@ -80,8 +80,7 @@ export default function Contact() {
     data.firstName.trim() &&
     data.lastName.trim() &&
     emailOk &&
-    (!data.callback ||
-      (data.phone.trim() && data.callbackDay && data.callbackTime));
+    (!data.callback || (data.phone.trim() && data.callbackTime));
   const canNext =
     (step === 0 && data.occasion) ||
     (step === 1 &&
@@ -292,7 +291,7 @@ export default function Contact() {
                         }`}
                       />
                       <span
-                        className={`font-sans text-[0.7rem] uppercase tracking-widest ${
+                        className={`font-sans text-[0.8rem] font-medium uppercase tracking-wide ${
                           i === step ? "text-noir" : "text-stone"
                         }`}
                       >
@@ -554,7 +553,7 @@ export default function Contact() {
                         <h3 className="font-display text-xl font-semibold text-noir">
                           Where do we send the quote?
                         </h3>
-                        <p className="-mt-1 font-serif text-base text-stone">
+                        <p className="-mt-1 font-serif text-base text-espresso/80">
                           First name, last name and email are required so we can
                           reach you with your quote.
                         </p>
@@ -582,7 +581,7 @@ export default function Contact() {
                           onChange={(e) => set("email", e.target.value)}
                           className={field}
                         />
-                        <p className="-mt-1.5 font-serif text-sm text-stone">
+                        <p className="-mt-1.5 font-serif text-base text-espresso/80">
                           Please give us your{" "}
                           <span className="font-semibold text-espresso">best email</span> —
                           this is how we&apos;ll reach you with your custom quote, so make
@@ -592,7 +591,7 @@ export default function Contact() {
                           <p className="font-sans text-sm text-red-700/80">
                             Please add your first name, last name and a valid email
                             {data.callback
-                              ? ", plus your phone, best day and time to call,"
+                              ? ", plus your phone and best time to call,"
                               : ""}{" "}
                             to send your inquiry.
                           </p>
@@ -626,22 +625,35 @@ export default function Contact() {
 
                         {data.callback && (
                           <div className="space-y-4 rounded-lg border border-gold/40 bg-gold/[0.06] p-4">
-                            <input
-                              required={data.callback}
-                              type="tel"
-                              placeholder="Phone number"
-                              value={data.phone}
-                              onChange={(e) => set("phone", e.target.value)}
-                              className={field}
-                            />
+                            <p className="font-serif text-base leading-relaxed text-espresso/85">
+                              We&apos;ll call you from{" "}
+                              <span className="whitespace-nowrap font-semibold text-noir">
+                                {site.phone}
+                              </span>{" "}
+                              at the time you choose — save it so you&apos;ll know it&apos;s
+                              us calling, not spam.
+                            </p>
+                            <div>
+                              <label className="font-sans text-sm text-espresso/80">
+                                Phone number *
+                              </label>
+                              <input
+                                required={data.callback}
+                                type="tel"
+                                placeholder="Your phone number"
+                                value={data.phone}
+                                onChange={(e) => set("phone", e.target.value)}
+                                className={`${field} mt-1.5`}
+                              />
+                            </div>
                             <div className="grid gap-4 sm:grid-cols-2">
                               <div>
                                 <label className="font-sans text-sm text-espresso/80">
-                                  Best day to call
+                                  Best day to call{" "}
+                                  <span className="text-stone">(optional)</span>
                                 </label>
                                 <input
                                   type="date"
-                                  required={data.callback}
                                   value={data.callbackDay}
                                   onChange={(e) => set("callbackDay", e.target.value)}
                                   className={`${field} mt-1.5`}
@@ -649,7 +661,7 @@ export default function Contact() {
                               </div>
                               <div>
                                 <label className="font-sans text-sm text-espresso/80">
-                                  Best time to call
+                                  Best time to call *
                                 </label>
                                 <input
                                   type="time"
