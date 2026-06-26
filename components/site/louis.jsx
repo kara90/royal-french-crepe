@@ -58,9 +58,9 @@ export default function Louis() {
 
         {/* Photo — right */}
         <Reveal className="order-1 lg:order-2">
-          <div className="frame-gold relative aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-black/40">
+          <div className="frame-gold relative aspect-[3/2] overflow-hidden rounded-sm shadow-2xl shadow-black/40">
             <Image
-              src="/images/menu/louis-xvi.jpg"
+              src="/images/louis-xvi-feature.jpg"
               alt="Louis XVI — the most premium sweet crêpe, with ice cream, fruit, Nutella, caramel and chocolate"
               fill
               sizes="(max-width: 1024px) 90vw, 45vw"
