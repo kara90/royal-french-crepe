@@ -4,7 +4,6 @@ import SmoothScroll from "@/components/site/smooth-scroll";
 import Cursor from "@/components/site/cursor";
 import Preloader from "@/components/site/preloader";
 import ScrollProgress from "@/components/site/scroll-progress";
-import ContactFab from "@/components/site/contact-fab";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -80,7 +79,6 @@ export default function RootLayout({ children }) {
         <SmoothScroll />
         <ScrollProgress />
         <Cursor />
-        <ContactFab />
         {children}
       </body>
     </html>

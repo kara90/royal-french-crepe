@@ -9,7 +9,7 @@ function Badge({ children }) {
   const royal = children === "Signature";
   return (
     <span
-      className={`shrink-0 rounded-full px-2 py-0.5 font-sans text-[0.55rem] font-semibold uppercase tracking-widest ${
+      className={`shrink-0 rounded-full px-2 py-0.5 font-sans text-[0.68rem] font-semibold uppercase tracking-widest ${
         royal ? "bg-gold text-noir" : "border border-gold/60 text-gold"
       }`}
     >
@@ -50,7 +50,7 @@ function Row({ item, open, onToggle, index }) {
               <span className="font-display text-lg font-semibold text-noir transition-colors group-hover:text-bordeaux">
                 {item.name}
               </span>
-              <span className="font-sans text-[0.6rem] uppercase tracking-[0.22em] text-stone">
+              <span className="font-sans text-[0.7rem] uppercase tracking-[0.22em] text-stone">
                 {item.type}
               </span>
             </span>

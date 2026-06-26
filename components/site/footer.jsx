@@ -15,9 +15,10 @@ export default function Footer() {
   return (
     <footer className="bg-noir text-ivory">
       <Tricolor />
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-2">
+      <div className="mx-auto max-w-6xl px-6 py-12 sm:py-14">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+          {/* Brand */}
+          <div className="max-w-sm">
             <span className="flex items-center gap-3">
               <span className="relative size-12 overflow-hidden rounded-full ring-1 ring-gold/40">
                 <Image
@@ -30,77 +31,67 @@ export default function Footer() {
               </span>
               <p className="font-display text-2xl font-semibold">Royal French Crêpe</p>
             </span>
-            <p className="eyebrow mt-3">L&apos;Expérience Parisienne</p>
-            <p className="mt-5 max-w-sm font-serif text-base leading-relaxed text-ivory/65">
-              Authentic premium French crêpes, handmade by French chefs from Paris.
-              Now serving Los Angeles, Las Vegas &amp; events across California.
+            <p className="mt-4 font-serif text-base leading-relaxed text-ivory/70">
+              Authentic premium French crêpes, handmade by French chefs from Paris —
+              now serving Los Angeles, Las Vegas &amp; events across California.
             </p>
           </div>
 
-          <div>
-            <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
-              Explore
-            </h3>
-            <ul className="mt-4 space-y-2.5">
-              {nav.map((l) => (
-                <li key={l.href}>
+          {/* Links + contact */}
+          <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
+            <div>
+              <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
+                Explore
+              </h3>
+              <ul className="mt-4 grid grid-cols-2 gap-x-10 gap-y-2.5 sm:grid-cols-1">
+                {nav.map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      className="font-serif text-base text-ivory/75 transition-colors hover:text-gold"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
+                Get in touch
+              </h3>
+              <ul className="mt-4 space-y-2.5">
+                <li>
                   <a
-                    href={l.href}
-                    className="font-serif text-base text-ivory/70 transition-colors hover:text-gold"
+                    href="https://www.instagram.com/royalfrenchcrepe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 font-serif text-base text-ivory/75 transition-colors hover:text-gold"
                   >
-                    {l.label}
+                    <Instagram className="size-4" /> @royalfrenchcrepe
                   </a>
                 </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
-              Get in touch
-            </h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-1.5 font-serif text-base text-ivory/70 transition-colors hover:text-gold"
-                >
-                  Book catering &amp; inquiries →
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.instagram.com/royalfrenchcrepe/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 font-serif text-base text-ivory/70 transition-colors hover:text-gold"
-                >
-                  <Instagram className="size-4" /> @royalfrenchcrepe
-                </a>
-              </li>
-              <li className="font-serif text-base text-ivory/70">
-                Open daily · 8:30 AM – 3:00 AM
-              </li>
-            </ul>
+                <li className="font-serif text-base text-ivory/75">
+                  Open daily · 8:30 AM – 3:00 AM
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mt-14 border-t border-ivory/10 pt-7">
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="font-sans text-sm text-ivory/60">
-              © {new Date().getFullYear()} Royal French Crêpe · All Rights Reserved
-            </p>
-            <p className="font-serif text-base italic text-ivory/60">
-              Made the French way — slowly, and with butter.
-            </p>
-          </div>
-          <p className="mt-6 text-center font-sans text-sm tracking-wide text-ivory/55">
+        {/* Bottom bar */}
+        <div className="mt-10 flex flex-col items-center gap-2 border-t border-ivory/10 pt-6 text-center sm:flex-row sm:justify-between sm:gap-4 sm:text-left">
+          <p className="font-sans text-sm text-ivory/60">
+            © {new Date().getFullYear()} Royal French Crêpe · All Rights Reserved
+          </p>
+          <p className="font-sans text-sm text-ivory/55">
             Designed, built &amp; managed by{" "}
             <a
               href="https://beyondtheedgestudio.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-ivory/75 underline-offset-2 transition-colors hover:text-gold hover:underline"
+              className="font-medium text-ivory/80 underline-offset-2 transition-colors hover:text-gold hover:underline"
             >
               Beyond the Edge Studio
             </a>

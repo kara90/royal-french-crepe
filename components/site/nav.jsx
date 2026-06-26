@@ -47,7 +47,7 @@ export default function Nav() {
             <span className="font-display text-lg font-semibold tracking-tight text-ivory sm:text-xl">
               Royal French Crêpe
             </span>
-            <span className="mt-1 font-sans text-[0.55rem] uppercase tracking-[0.34em] text-gold">
+            <span className="mt-1 font-sans text-[0.66rem] uppercase tracking-[0.34em] text-gold">
               L&apos;Expérience Parisienne
             </span>
           </span>

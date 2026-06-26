@@ -66,7 +66,7 @@ export default function Cursor() {
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.6 }}
-                className="font-sans text-[0.6rem] font-semibold uppercase tracking-widest text-noir"
+                className="font-sans text-[0.7rem] font-semibold uppercase tracking-widest text-noir"
               >
                 {label}
               </motion.span>

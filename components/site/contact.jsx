@@ -275,7 +275,7 @@ export default function Contact() {
                         }`}
                       />
                       <span
-                        className={`font-sans text-[0.6rem] uppercase tracking-widest ${
+                        className={`font-sans text-[0.7rem] uppercase tracking-widest ${
                           i === step ? "text-noir" : "text-stone"
                         }`}
                       >
@@ -471,7 +471,7 @@ export default function Contact() {
                                   <span className="block truncate font-display text-base font-semibold text-noir">
                                     {item.name}
                                   </span>
-                                  <span className="font-sans text-[0.6rem] uppercase tracking-widest text-stone">
+                                  <span className="font-sans text-[0.7rem] uppercase tracking-widest text-stone">
                                     {item.type}
                                   </span>
                                 </span>
@@ -489,7 +489,7 @@ export default function Contact() {
                             <span className="font-display text-base font-semibold text-noir">
                               Natural ice cream
                             </span>
-                            <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.6rem] uppercase tracking-widest text-stone">
+                            <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
                               Optional
                             </span>
                           </div>

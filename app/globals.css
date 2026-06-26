@@ -107,8 +107,8 @@
   .eyebrow {
     font-family: var(--font-sans);
     text-transform: uppercase;
-    letter-spacing: 0.28em;
-    font-size: 0.7rem;
+    letter-spacing: 0.24em;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--gold);
   }

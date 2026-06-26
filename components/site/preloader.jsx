@@ -62,7 +62,7 @@ export default function Preloader() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="font-sans text-[0.6rem] uppercase tracking-[0.34em] text-gold"
+              className="font-sans text-[0.7rem] uppercase tracking-[0.34em] text-gold"
             >
               L&apos;Expérience Parisienne
             </motion.span>

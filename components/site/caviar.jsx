@@ -45,7 +45,7 @@ export default function Caviar() {
                 <div className="group rounded-2xl border border-gold/25 bg-ivory/[0.04] p-7 transition-all duration-500 hover:border-gold/60 hover:bg-ivory/[0.07]">
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="font-display text-2xl font-semibold">{item.name}</h3>
-                    <span className="rounded-full bg-gold px-3 py-1 font-sans text-[0.6rem] font-semibold uppercase tracking-widest text-noir">
+                    <span className="rounded-full bg-gold px-3 py-1 font-sans text-[0.7rem] font-semibold uppercase tracking-widest text-noir">
                       {item.tag}
                     </span>
                   </div>
