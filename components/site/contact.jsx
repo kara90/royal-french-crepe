@@ -80,7 +80,8 @@ export default function Contact() {
     data.firstName.trim() &&
     data.lastName.trim() &&
     emailOk &&
-    (!data.callback || (data.phone.trim() && data.callbackTime));
+    (!data.callback ||
+      (data.phone.trim() && data.callbackDay && data.callbackTime));
   const canNext =
     (step === 0 && data.occasion) ||
     (step === 1 &&
@@ -591,7 +592,7 @@ export default function Contact() {
                           <p className="font-sans text-sm text-red-700/80">
                             Please add your first name, last name and a valid email
                             {data.callback
-                              ? ", plus your phone and best time to call,"
+                              ? ", plus your phone, best day and best time to call,"
                               : ""}{" "}
                             to send your inquiry.
                           </p>
@@ -649,11 +650,11 @@ export default function Contact() {
                             <div className="grid gap-4 sm:grid-cols-2">
                               <div>
                                 <label className="font-sans text-sm text-espresso/80">
-                                  Best day to call{" "}
-                                  <span className="text-stone">(optional)</span>
+                                  Best day to call *
                                 </label>
                                 <input
                                   type="date"
+                                  required={data.callback}
                                   value={data.callbackDay}
                                   onChange={(e) => set("callbackDay", e.target.value)}
                                   className={`${field} mt-1.5`}
