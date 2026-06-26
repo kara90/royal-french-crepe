@@ -273,7 +273,15 @@ export default function Contact() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={submit}>
+              <form
+                onSubmit={submit}
+                onKeyDown={(e) => {
+                  // Never let Enter submit or skip steps — only the buttons advance.
+                  if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                  }
+                }}
+              >
                 {/* Progress */}
                 <div className="mb-7 flex items-center gap-2">
                   {STEPS.map((s, i) => (
