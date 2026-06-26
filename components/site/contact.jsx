@@ -18,6 +18,7 @@ const occasions = [
 ];
 const guestRanges = ["Up to 25", "25–50", "50–100", "100–250", "250+"];
 const styleOptions = ["Classic", "Premium", "Royal", "Caviar", "Coffee & Tea"];
+const callbackTimes = ["Morning", "Afternoon", "Evening"];
 
 const STEPS = ["Occasion", "Details", "Crêpes", "Your idea", "You"];
 
@@ -31,10 +32,14 @@ export default function Contact() {
     guests: "",
     location: "",
     styles: [],
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    phone: "",
     message: "",
+    callback: false,
+    phone: "",
+    callbackDay: "",
+    callbackTime: "",
   });
 
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
@@ -64,9 +69,19 @@ export default function Contact() {
 
   const submit = async (e) => {
     e.preventDefault();
+    const fullName = `${data.firstName} ${data.lastName}`.trim();
     const subject = `Catering inquiry — ${data.occasion || "Event"}${
-      data.name ? ` (${data.name})` : ""
+      fullName ? ` (${fullName})` : ""
     }`;
+    const callbackLines = data.callback
+      ? [
+          "",
+          "Wants a callback: YES",
+          `Phone: ${data.phone || "—"}`,
+          `Preferred day: ${data.callbackDay || "—"}`,
+          `Preferred time: ${data.callbackTime || "—"}`,
+        ]
+      : ["", "Wants a callback: No"];
     const body = [
       `Occasion: ${data.occasion}`,
       `Date: ${data.date || "—"}`,
@@ -74,11 +89,12 @@ export default function Contact() {
       `Location: ${data.location || "—"}`,
       `Crêpe styles: ${data.styles.join(", ")}`,
       "",
-      `Name: ${data.name}`,
+      `Name: ${fullName}`,
       `Email: ${data.email}`,
-      `Phone: ${data.phone}`,
+      ...callbackLines,
       "",
-      data.message,
+      "What they want:",
+      data.message || "—",
     ].join("\n");
 
     // No key yet → fall back to the visitor's email app.
@@ -91,25 +107,32 @@ export default function Contact() {
     // Send straight to the inbox via Web3Forms.
     setSending(true);
     try {
+      const payload = {
+        access_key: KEY,
+        subject,
+        from_name: "Royal French Crêpe — Website",
+        replyto: data.email,
+        botcheck: "",
+        Occasion: data.occasion,
+        Date: data.date || "—",
+        Guests: data.guests,
+        Location: data.location || "—",
+        "Crêpe styles": data.styles.join(", "),
+        "First name": data.firstName,
+        "Last name": data.lastName,
+        Email: data.email,
+        "Wants a callback": data.callback ? "Yes" : "No",
+        "What they want": data.message || "—",
+      };
+      if (data.callback) {
+        payload.Phone = data.phone;
+        payload["Callback day"] = data.callbackDay || "—";
+        payload["Callback time"] = data.callbackTime || "—";
+      }
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: KEY,
-          subject,
-          from_name: "Royal French Crêpe — Website",
-          replyto: data.email,
-          botcheck: "",
-          Occasion: data.occasion,
-          Date: data.date || "—",
-          Guests: data.guests,
-          Location: data.location || "—",
-          "Crêpe styles": data.styles.join(", "),
-          Name: data.name,
-          Email: data.email,
-          Phone: data.phone,
-          Message: data.message,
-        }),
+        body: JSON.stringify(payload),
       });
       const json = await res.json();
       if (json.success) {
@@ -211,7 +234,7 @@ export default function Contact() {
                   <Check className="size-8" />
                 </span>
                 <h3 className="mt-6 font-display text-2xl font-semibold text-noir">
-                  Merci, {data.name || "friend"}!
+                  Merci, {data.firstName || "friend"}!
                 </h3>
                 <p className="mt-3 max-w-sm font-serif text-base text-espresso/80">
                   {useWeb3
@@ -368,26 +391,83 @@ export default function Contact() {
                         <div className="grid gap-4 sm:grid-cols-2">
                           <input
                             required
-                            placeholder="Your name"
-                            value={data.name}
-                            onChange={(e) => set("name", e.target.value)}
+                            placeholder="First name"
+                            value={data.firstName}
+                            onChange={(e) => set("firstName", e.target.value)}
                             className={field}
                           />
                           <input
                             required
-                            type="email"
-                            placeholder="Email"
-                            value={data.email}
-                            onChange={(e) => set("email", e.target.value)}
+                            placeholder="Last name"
+                            value={data.lastName}
+                            onChange={(e) => set("lastName", e.target.value)}
                             className={field}
                           />
                         </div>
                         <input
-                          placeholder="Phone"
-                          value={data.phone}
-                          onChange={(e) => set("phone", e.target.value)}
+                          required
+                          type="email"
+                          placeholder="Email"
+                          value={data.email}
+                          onChange={(e) => set("email", e.target.value)}
                           className={field}
                         />
+
+                        {/* Callback opt-in */}
+                        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-noir/15 bg-ivory px-4 py-3">
+                          <input
+                            type="checkbox"
+                            checked={data.callback}
+                            onChange={(e) => set("callback", e.target.checked)}
+                            className="size-5 accent-gold"
+                          />
+                          <span className="font-sans text-base text-espresso">
+                            I&apos;d like a callback to talk it through
+                          </span>
+                        </label>
+
+                        {data.callback && (
+                          <div className="space-y-4 rounded-lg border border-gold/40 bg-gold/[0.06] p-4">
+                            <input
+                              required={data.callback}
+                              type="tel"
+                              placeholder="Phone number"
+                              value={data.phone}
+                              onChange={(e) => set("phone", e.target.value)}
+                              className={field}
+                            />
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              <div>
+                                <label className="font-sans text-sm text-espresso/80">
+                                  Best day to call
+                                </label>
+                                <input
+                                  type="date"
+                                  value={data.callbackDay}
+                                  onChange={(e) => set("callbackDay", e.target.value)}
+                                  className={`${field} mt-1.5`}
+                                />
+                              </div>
+                              <div>
+                                <label className="font-sans text-sm text-espresso/80">
+                                  Best time
+                                </label>
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  {callbackTimes.map((t) => (
+                                    <button
+                                      type="button"
+                                      key={t}
+                                      onClick={() => set("callbackTime", t)}
+                                      className={chip(data.callbackTime === t)}
+                                    >
+                                      {t}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </motion.div>
