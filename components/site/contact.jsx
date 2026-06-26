@@ -198,7 +198,7 @@ export default function Contact() {
   };
 
   const field =
-    "w-full rounded-lg border border-noir/15 bg-ivory px-4 py-3 font-sans text-base text-noir outline-none transition-colors placeholder:text-stone/60 focus:border-gold focus:ring-2 focus:ring-gold/30";
+    "w-full rounded-lg border border-noir/15 bg-ivory px-4 py-3 font-sans text-base text-noir outline-none transition-colors placeholder:font-normal placeholder:text-stone/45 focus:border-gold focus:ring-2 focus:ring-gold/30";
   const chip = (selected) =>
     `cursor-pointer rounded-full border px-4 py-2 font-sans text-sm transition-all duration-200 ${
       selected
@@ -582,6 +582,12 @@ export default function Contact() {
                           onChange={(e) => set("email", e.target.value)}
                           className={field}
                         />
+                        <p className="-mt-1.5 font-serif text-sm text-stone">
+                          Please give us your{" "}
+                          <span className="font-semibold text-espresso">best email</span> —
+                          this is how we&apos;ll reach you with your custom quote, so make
+                          sure it&apos;s one you check often.
+                        </p>
                         {step === 4 && !contactOk && (
                           <p className="font-sans text-sm text-red-700/80">
                             Please add your first name, last name and a valid email
@@ -592,16 +598,29 @@ export default function Contact() {
                           </p>
                         )}
 
-                        {/* Callback opt-in */}
-                        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-noir/15 bg-ivory px-4 py-3">
+                        {/* Callback opt-in — strongly recommended */}
+                        <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-gold/45 bg-gold/[0.06] px-4 py-3.5">
                           <input
                             type="checkbox"
                             checked={data.callback}
                             onChange={(e) => set("callback", e.target.checked)}
-                            className="size-5 accent-gold"
+                            className="mt-0.5 size-5 accent-gold"
                           />
-                          <span className="font-sans text-base text-espresso">
-                            I&apos;d like a callback to talk it through
+                          <span className="block">
+                            <span className="flex flex-wrap items-center gap-2">
+                              <span className="font-sans text-base font-medium text-espresso">
+                                I&apos;d like a callback to talk it through
+                              </span>
+                              <span className="rounded-full bg-gold px-2 py-0.5 font-sans text-[0.65rem] font-semibold uppercase tracking-wider text-noir">
+                                Recommended
+                              </span>
+                            </span>
+                            <span className="mt-1.5 block font-serif text-sm leading-relaxed text-espresso/80">
+                              There are so many ways to make your event yours — décor,
+                              styles, crêpe choices and add-ons. A quick call lets us
+                              tailor everything to you. It&apos;s optional, but we
+                              strongly recommend it.
+                            </span>
                           </span>
                         </label>
 
