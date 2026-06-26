@@ -51,8 +51,9 @@ export default function Caviar() {
             </h2>
             <div className="rule-gold mt-7 w-28" />
             <p className="mt-7 max-w-md font-serif text-lg leading-relaxed text-ivory/80">
-              Where French tradition meets pure luxury. An ultra-thin Parisian crêpe,
-              organic salad, a whisper of lemon — and authentic Royal Ossetra caviar.
+              Where French tradition meets pure luxury. An ultra-thin Parisian crêpe
+              with sour cream, organic salad, tomatoes and a whisper of lemon, finished
+              with authentic Royal Ossetra caviar, served with or without smoked salmon.
               Our most exclusive creation, for guests who want the unforgettable.
             </p>
           </Reveal>
