@@ -9,6 +9,7 @@ import { site } from "@/lib/site";
 const EMAIL = site.email;
 const occasions = [
   "Wedding",
+  "Baby shower",
   "Birthday",
   "Corporate event",
   "Bar / Bat Mitzvah",
