@@ -7,6 +7,7 @@ import Why from "@/components/site/why";
 import VideoFeature from "@/components/site/video-feature";
 import MenuSection from "@/components/site/menu-section";
 import Caviar from "@/components/site/caviar";
+import Louis from "@/components/site/louis";
 import Heritage from "@/components/site/heritage";
 import Catering from "@/components/site/catering";
 import Gallery from "@/components/site/gallery";
@@ -47,6 +48,7 @@ export default function Home() {
         <VideoFeature />
         <MenuSection />
         <Caviar />
+        <Louis />
         <Heritage />
         <Catering />
         <Gallery />
