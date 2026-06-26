@@ -27,45 +27,137 @@ const geist = Geist({
 export const metadata = {
   metadataBase: new URL("https://royalfrenchcrepe.com"),
   title: {
-    default: "Royal French Crêpe — L'Expérience Parisienne | Los Angeles & Las Vegas",
+    default:
+      "Royal French Crêpe — Authentic French Crêpes & Catering | Los Angeles & Las Vegas",
     template: "%s · Royal French Crêpe",
   },
   description:
-    "Authentic premium French crêpes, handmade by French chefs from Paris. Sweet, savory & Royal Ossetra caviar crêpes — plus elegant mobile catering across LA, Las Vegas & California. Open 8:30 AM–3 AM.",
+    "Authentic premium French crêpes, handmade by French chefs from Paris. Sweet, savory & Royal Ossetra caviar crêpes — plus live crêpe-station catering for weddings & events across Los Angeles, Las Vegas & California. Crafting crêpes since 2007.",
+  applicationName: "Royal French Crêpe",
   keywords: [
-    "French crepes",
-    "Los Angeles crepes",
-    "Las Vegas crepes",
-    "crepe catering California",
-    "Royal French Crepe",
+    "French crepes Los Angeles",
+    "crepe catering Los Angeles",
+    "crepe catering Las Vegas",
+    "live crepe station",
+    "wedding crepe catering California",
     "Parisian crepes",
     "caviar crepe",
-    "wedding crepe catering",
+    "French dessert catering",
+    "crepe bar rental",
+    "mobile crepe catering",
+    "corporate event catering Los Angeles",
+    "Royal French Crepe",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  authors: [{ name: "Royal French Crêpe" }],
+  creator: "Royal French Crêpe",
+  publisher: "Royal French Crêpe",
+  category: "food",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "Royal French Crêpe — L'Expérience Parisienne",
+    title: "Royal French Crêpe — Authentic French Crêpes & Catering",
     description:
-      "Authentic premium French crêpes, handmade by French chefs. Sweet, savory & caviar crêpes, plus catering across LA, Las Vegas & California.",
+      "Handmade French crêpes — sweet, savory & Royal Ossetra caviar — plus live crêpe-station catering across LA, Las Vegas & California. Crafting crêpes since 2007.",
     url: "https://royalfrenchcrepe.com",
     siteName: "Royal French Crêpe",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "/images/marie-antoinette.jpg",
-        width: 1000,
-        height: 679,
-        alt: "Marie Antoinette crêpe by Royal French Crêpe",
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "A signature Royal French Crêpe with strawberries, banana, ice cream and chocolate",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Royal French Crêpe — L'Expérience Parisienne",
+    title: "Royal French Crêpe — Authentic French Crêpes & Catering",
     description:
-      "Authentic premium French crêpes & catering across LA, Las Vegas & California.",
-    images: ["/images/marie-antoinette.jpg"],
+      "Handmade French crêpes & live crêpe-station catering across LA, Las Vegas & California. Since 2007.",
+    images: ["/og-image.jpg"],
   },
+};
+
+export const viewport = {
+  themeColor: "#1a120b",
+  colorScheme: "light",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://royalfrenchcrepe.com/#website",
+      url: "https://royalfrenchcrepe.com",
+      name: "Royal French Crêpe",
+      inLanguage: "en-US",
+      publisher: { "@id": "https://royalfrenchcrepe.com/#business" },
+    },
+    {
+      "@type": "Caterer",
+      "@id": "https://royalfrenchcrepe.com/#business",
+      name: "Royal French Crêpe",
+      description:
+        "Authentic premium French crêpes handmade by French chefs from Paris — sweet, savory and Royal Ossetra caviar crêpes — plus live crêpe-station catering for weddings and events across Los Angeles, Las Vegas and California.",
+      url: "https://royalfrenchcrepe.com",
+      telephone: "+1-323-287-4274",
+      email: "royalfrenchcrepe@gmail.com",
+      image: [
+        "https://royalfrenchcrepe.com/og-image.jpg",
+        "https://royalfrenchcrepe.com/images/menu/caviar-1.jpg",
+        "https://royalfrenchcrepe.com/images/louis-xvi-feature.jpg",
+      ],
+      logo: "https://royalfrenchcrepe.com/icon.png",
+      priceRange: "$$$",
+      servesCuisine: ["French", "Crêpes", "Desserts"],
+      foundingDate: "2007",
+      currenciesAccepted: "USD",
+      paymentAccepted: "Zelle, CashApp, Venmo",
+      hasMenu: "https://royalfrenchcrepe.com/#menu",
+      address: {
+        "@type": "PostalAddress",
+        addressRegion: "CA",
+        addressCountry: "US",
+      },
+      areaServed: [
+        { "@type": "City", name: "Los Angeles" },
+        { "@type": "City", name: "Las Vegas" },
+        { "@type": "AdministrativeArea", name: "California" },
+      ],
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "08:30",
+          closes: "03:00",
+        },
+      ],
+      sameAs: ["https://www.instagram.com/royalfrenchcrepe/"],
+    },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -75,6 +167,10 @@ export default function RootLayout({ children }) {
       className={`${playfair.variable} ${cormorant.variable} ${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-noir">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Preloader />
         <SmoothScroll />
         <ScrollProgress />
