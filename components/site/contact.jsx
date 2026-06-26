@@ -18,7 +18,15 @@ const occasions = [
 ];
 const guestRanges = ["Up to 25", "25–50", "50–100", "100–250", "250+"];
 const styleOptions = ["Classic", "Premium", "Royal", "Caviar", "Coffee & Tea"];
-const callbackTimes = ["Morning", "Afternoon", "Evening"];
+
+// "14:30" → "2:30 PM"
+const to12h = (t) => {
+  if (!t) return "—";
+  const [h, m] = t.split(":").map(Number);
+  const ap = h >= 12 ? "PM" : "AM";
+  const hh = ((h + 11) % 12) + 1;
+  return `${hh}:${String(m).padStart(2, "0")} ${ap}`;
+};
 
 const STEPS = ["Occasion", "Details", "Crêpes", "Your idea", "You"];
 
@@ -79,7 +87,7 @@ export default function Contact() {
           "Wants a callback: YES",
           `Phone: ${data.phone || "—"}`,
           `Preferred day: ${data.callbackDay || "—"}`,
-          `Preferred time: ${data.callbackTime || "—"}`,
+          `Preferred time: ${to12h(data.callbackTime)}`,
         ]
       : ["", "Wants a callback: No"];
     const body = [
@@ -127,7 +135,7 @@ export default function Contact() {
       if (data.callback) {
         payload.Phone = data.phone;
         payload["Callback day"] = data.callbackDay || "—";
-        payload["Callback time"] = data.callbackTime || "—";
+        payload["Callback time"] = to12h(data.callbackTime);
       }
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -450,20 +458,14 @@ export default function Contact() {
                               </div>
                               <div>
                                 <label className="font-sans text-sm text-espresso/80">
-                                  Best time
+                                  Best time to call
                                 </label>
-                                <div className="mt-2 flex flex-wrap gap-2">
-                                  {callbackTimes.map((t) => (
-                                    <button
-                                      type="button"
-                                      key={t}
-                                      onClick={() => set("callbackTime", t)}
-                                      className={chip(data.callbackTime === t)}
-                                    >
-                                      {t}
-                                    </button>
-                                  ))}
-                                </div>
+                                <input
+                                  type="time"
+                                  value={data.callbackTime}
+                                  onChange={(e) => set("callbackTime", e.target.value)}
+                                  className={`${field} mt-1.5`}
+                                />
                               </div>
                             </div>
                           </div>
