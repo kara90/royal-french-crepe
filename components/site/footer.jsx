@@ -31,7 +31,7 @@ export default function Footer() {
               </span>
               <p className="font-display text-2xl font-semibold">Royal French Crêpe</p>
             </span>
-            <p className="mt-4 font-serif text-base leading-relaxed text-ivory/70">
+            <p className="mt-4 font-serif text-base leading-relaxed text-ivory/84">
               Authentic premium French crêpes, handmade by French chefs from Paris —
               now serving Los Angeles, Las Vegas &amp; events across California.
             </p>
@@ -48,7 +48,7 @@ export default function Footer() {
                   <li key={l.href}>
                     <a
                       href={l.href}
-                      className="font-serif text-base text-ivory/75 transition-colors hover:text-gold"
+                      className="font-serif text-base text-ivory/86 transition-colors hover:text-gold"
                     >
                       {l.label}
                     </a>
@@ -67,12 +67,12 @@ export default function Footer() {
                     href="https://www.instagram.com/royalfrenchcrepe/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 font-serif text-base text-ivory/75 transition-colors hover:text-gold"
+                    className="flex items-center gap-2 font-serif text-base text-ivory/86 transition-colors hover:text-gold"
                   >
                     <Instagram className="size-4" /> @royalfrenchcrepe
                   </a>
                 </li>
-                <li className="font-serif text-base text-ivory/75">
+                <li className="font-serif text-base text-ivory/86">
                   Open daily · 8:30 AM – 3:00 AM
                 </li>
               </ul>
@@ -82,10 +82,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col items-center gap-2 border-t border-ivory/10 pt-6 text-center sm:flex-row sm:justify-between sm:gap-4 sm:text-left">
-          <p className="font-sans text-sm text-ivory/60">
+          <p className="font-sans text-sm text-ivory/82">
             © {new Date().getFullYear()} Royal French Crêpe · All Rights Reserved
           </p>
-          <p className="font-sans text-sm text-ivory/55">
+          <p className="font-sans text-sm text-ivory/82">
             Designed, built &amp; managed by{" "}
             <a
               href="https://beyondtheedgestudio.com"

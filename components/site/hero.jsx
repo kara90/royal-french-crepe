@@ -136,7 +136,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.65 }}
-          className="mt-10 flex items-center justify-center gap-2 font-sans text-xs text-ivory/65"
+          className="mt-10 flex items-center justify-center gap-2 font-sans text-sm text-ivory/84"
         >
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="size-3.5 fill-gold text-gold" />

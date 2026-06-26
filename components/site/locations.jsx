@@ -29,8 +29,8 @@ export default function Locations() {
               <div className="group h-full rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-8 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:bg-ivory/[0.06] hover:shadow-2xl hover:shadow-black/30">
                 <MapPin className="size-6 text-gold transition-transform duration-500 group-hover:scale-110" />
                 <h3 className="mt-5 font-display text-2xl font-semibold">{loc.city}</h3>
-                <p className="mt-1 font-serif text-lg text-ivory/70">{loc.note}</p>
-                <p className="mt-5 font-serif text-base leading-relaxed text-ivory/60">
+                <p className="mt-1 font-serif text-lg text-ivory/84">{loc.note}</p>
+                <p className="mt-5 font-serif text-base leading-relaxed text-ivory/82">
                   Retail crêpes &amp; mobile catering. Message us for today&apos;s
                   location and to reserve your event.
                 </p>
@@ -46,7 +46,7 @@ export default function Locations() {
               Open every day · 8:30 AM – 3:00 AM
             </p>
             <span className="hidden text-ivory/30 sm:inline">|</span>
-            <p className="font-serif text-base text-ivory/70">
+            <p className="font-serif text-base text-ivory/84">
               Late-night crêpes are kind of our thing.
             </p>
           </div>

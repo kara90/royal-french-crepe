@@ -17,7 +17,7 @@ export default function VideoFeature() {
           <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             See the experience
           </h2>
-          <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/75">
+          <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/86">
             A taste of what we bring to your table — the craft, the show, the crêpes.
           </p>
         </Reveal>

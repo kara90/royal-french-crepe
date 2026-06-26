@@ -129,7 +129,7 @@ export default function Gallery() {
                 e.stopPropagation();
                 step(-1);
               }}
-              className="absolute left-3 text-ivory/70 transition-colors hover:text-gold sm:left-8"
+              className="absolute left-3 text-ivory/84 transition-colors hover:text-gold sm:left-8"
             >
               <ArrowLeft className="size-8" />
             </button>
@@ -156,7 +156,7 @@ export default function Gallery() {
                 e.stopPropagation();
                 step(1);
               }}
-              className="absolute right-3 text-ivory/70 transition-colors hover:text-gold sm:right-8"
+              className="absolute right-3 text-ivory/84 transition-colors hover:text-gold sm:right-8"
             >
               <ArrowRight className="size-8" />
             </button>

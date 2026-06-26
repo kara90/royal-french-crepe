@@ -43,7 +43,7 @@ export default function Why() {
           <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             What makes us so <span className="italic text-gold-gradient">magnifique</span>
           </h2>
-          <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/75">
+          <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/86">
             Anyone can pour batter on a pan. Very few can hand you Paris on a plate.
           </p>
         </Reveal>
@@ -56,7 +56,7 @@ export default function Why() {
                   <f.icon className="size-5" />
                 </span>
                 <h3 className="mt-6 font-display text-xl font-semibold">{f.title}</h3>
-                <p className="mt-3 font-serif text-[1.05rem] leading-relaxed text-ivory/70">
+                <p className="mt-3 font-serif text-[1.12rem] leading-relaxed text-ivory/84">
                   {f.text}
                 </p>
               </div>
@@ -85,7 +85,7 @@ export default function Why() {
             <h3 className="mt-4 font-display text-3xl font-semibold italic text-gold-gradient sm:text-4xl">
               “Let them eat crêpes.”
             </h3>
-            <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/75">
+            <p className="mt-5 font-serif text-lg leading-relaxed text-ivory/86">
               Our name is a wink to Marie Antoinette — the line reimagined for a new
               century. Royal French Crêpe brings a little of that decadence to everyone,
               from a Tuesday treat to a Versailles-worthy celebration.

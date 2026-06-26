@@ -9,23 +9,13 @@ export default function Caviar() {
       id="caviar"
       className="grain relative isolate overflow-hidden bg-espresso py-24 text-ivory sm:py-32"
     >
-      {/* Barely-visible background film, feathered on every edge so it reads
-          as ambient texture over the espresso, never a visible video box */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          maskImage:
-            "radial-gradient(115% 115% at 50% 50%, #000 48%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(115% 115% at 50% 50%, #000 48%, transparent 100%)",
-        }}
-      >
-        <BgVideo
-          src="/videos/caviar-bg.mp4"
-          className="h-full w-full object-cover opacity-[0.16]"
-        />
-      </div>
+      {/* Discreet background film, dimmed by a filter on top so you only just
+          make it out, like the Magnifique section */}
+      <BgVideo
+        src="/videos/caviar-bg.mp4"
+        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+      />
+      <div className="absolute inset-0 -z-10 bg-espresso/74" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,oklch(0.74_0.105_78/0.14),transparent_55%)]" />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         {/* Photo — left */}
@@ -68,14 +58,14 @@ export default function Caviar() {
                       {item.tag}
                     </span>
                   </div>
-                  <p className="mt-3 font-serif text-[1.05rem] leading-relaxed text-ivory/75">
+                  <p className="mt-3 font-serif text-[1.12rem] leading-relaxed text-ivory/86">
                     {item.desc}
                   </p>
                 </div>
               </Reveal>
             ))}
             <Reveal delay={0.2}>
-              <p className="pt-1 text-center font-serif text-sm italic text-ivory/55">
+              <p className="pt-1 text-center font-serif text-base italic text-ivory/82">
                 Available by request &amp; for private events.
               </p>
             </Reveal>

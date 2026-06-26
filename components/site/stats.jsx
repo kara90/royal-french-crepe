@@ -22,7 +22,7 @@ export default function Stats() {
             <div className="font-display text-5xl font-semibold text-gold-gradient sm:text-6xl">
               <CountUp to={s.to} prefix={s.prefix} suffix={s.suffix} />
             </div>
-            <p className="mx-auto mt-3 max-w-[14ch] font-serif text-sm leading-snug text-ivory/70">
+            <p className="mx-auto mt-3 max-w-[14ch] font-serif text-base leading-snug text-ivory/84">
               {s.label}
             </p>
             {i < stats.length - 1 && (
