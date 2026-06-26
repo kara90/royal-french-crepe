@@ -40,7 +40,9 @@ export default function Contact() {
   const [data, setData] = useState({
     occasion: "",
     date: "",
-    eventTime: "",
+    startTime: "",
+    endTime: "",
+    timeTbd: false,
     guests: "",
     location: "",
     crepes: [],
@@ -66,7 +68,11 @@ export default function Contact() {
 
   const canNext =
     (step === 0 && data.occasion) ||
-    (step === 1 && data.date && data.eventTime && data.guests && data.location) ||
+    (step === 1 &&
+      data.date &&
+      data.guests &&
+      data.location &&
+      (data.timeTbd || (data.startTime && data.endTime))) ||
     (step === 2 && data.crepes.length) ||
     step === 3 ||
     step === 4;
@@ -83,6 +89,9 @@ export default function Contact() {
   const submit = async (e) => {
     e.preventDefault();
     const fullName = `${data.firstName} ${data.lastName}`.trim();
+    const eventTimeStr = data.timeTbd
+      ? "Not sure yet (still planning)"
+      : `${to12h(data.startTime)} – ${to12h(data.endTime)} (base 2 hrs)`;
     const subject = `Catering inquiry — ${data.occasion || "Event"}${
       fullName ? ` (${fullName})` : ""
     }`;
@@ -98,7 +107,7 @@ export default function Contact() {
     const body = [
       `Occasion: ${data.occasion}`,
       `Date: ${data.date || "—"}`,
-      `Event time: ${to12h(data.eventTime)}`,
+      `Event time: ${eventTimeStr}`,
       `Guests: ${data.guests}`,
       `Location: ${data.location || "—"}`,
       `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
@@ -129,7 +138,7 @@ export default function Contact() {
         botcheck: "",
         Occasion: data.occasion,
         Date: data.date || "—",
-        "Event time": to12h(data.eventTime),
+        "Event time": eventTimeStr,
         Guests: data.guests,
         Location: data.location || "—",
         "Crêpes wanted": data.crepes.join(", ") || "—",
@@ -313,29 +322,61 @@ export default function Contact() {
                         <h3 className="font-display text-xl font-semibold text-noir">
                           When &amp; how many?
                         </h3>
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div>
-                            <label className="font-sans text-sm text-espresso/80">
-                              Event date *
-                            </label>
-                            <input
-                              type="date"
-                              value={data.date}
-                              onChange={(e) => set("date", e.target.value)}
-                              className={`${field} mt-1.5`}
-                            />
-                          </div>
-                          <div>
+                        <div>
+                          <label className="font-sans text-sm text-espresso/80">
+                            Event date *
+                          </label>
+                          <input
+                            type="date"
+                            value={data.date}
+                            onChange={(e) => set("date", e.target.value)}
+                            className={`${field} mt-1.5`}
+                          />
+                        </div>
+                        <div>
+                          <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                             <label className="font-sans text-sm text-espresso/80">
                               Event time *
                             </label>
-                            <input
-                              type="time"
-                              value={data.eventTime}
-                              onChange={(e) => set("eventTime", e.target.value)}
-                              className={`${field} mt-1.5`}
-                            />
+                            <span className="font-sans text-xs text-stone">
+                              Base service is 2 hrs · extra time can be added
+                            </span>
                           </div>
+                          {!data.timeTbd && (
+                            <div className="mt-1.5 grid gap-3 sm:grid-cols-2">
+                              <div>
+                                <span className="font-sans text-xs text-stone">
+                                  Start
+                                </span>
+                                <input
+                                  type="time"
+                                  value={data.startTime}
+                                  onChange={(e) => set("startTime", e.target.value)}
+                                  className={`${field} mt-1`}
+                                />
+                              </div>
+                              <div>
+                                <span className="font-sans text-xs text-stone">End</span>
+                                <input
+                                  type="time"
+                                  value={data.endTime}
+                                  onChange={(e) => set("endTime", e.target.value)}
+                                  className={`${field} mt-1`}
+                                />
+                              </div>
+                            </div>
+                          )}
+                          <label className="mt-2.5 flex cursor-pointer items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={data.timeTbd}
+                              onChange={(e) => set("timeTbd", e.target.checked)}
+                              className="size-4 accent-gold"
+                            />
+                            <span className="font-sans text-sm text-espresso">
+                              I&apos;m not sure of the time yet — still planning
+                            </span>
+                          </label>
                         </div>
                         <div>
                           <label className="font-sans text-sm text-espresso/80">
