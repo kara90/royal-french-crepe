@@ -4,6 +4,7 @@ import SmoothScroll from "@/components/site/smooth-scroll";
 import Cursor from "@/components/site/cursor";
 import Preloader from "@/components/site/preloader";
 import ScrollProgress from "@/components/site/scroll-progress";
+import { faqs } from "@/lib/faq";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -156,6 +157,15 @@ const jsonLd = {
         },
       ],
       sameAs: ["https://www.instagram.com/royalfrenchcrepe/"],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://royalfrenchcrepe.com/#faq",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
   ],
 };
