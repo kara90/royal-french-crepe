@@ -75,6 +75,13 @@ export default function Contact() {
         : [...d.iceCream, f],
     }));
 
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
+  const contactOk =
+    data.firstName.trim() &&
+    data.lastName.trim() &&
+    emailOk &&
+    (!data.callback ||
+      (data.phone.trim() && data.callbackDay && data.callbackTime));
   const canNext =
     (step === 0 && data.occasion) ||
     (step === 1 &&
@@ -84,7 +91,7 @@ export default function Contact() {
       (data.timeTbd || (data.startTime && data.endTime))) ||
     (step === 2 && data.crepes.length) ||
     step === 3 ||
-    step === 4;
+    (step === 4 && contactOk);
 
   const KEY = site.web3formsKey;
   const useWeb3 = KEY && !KEY.includes("PASTE");
@@ -97,6 +104,8 @@ export default function Contact() {
 
   const submit = async (e) => {
     e.preventDefault();
+    // Bare minimum: never send without a first name, last name and valid email.
+    if (!contactOk) return;
     const fullName = `${data.firstName} ${data.lastName}`.trim();
     const eventTimeStr = data.timeTbd
       ? "Not sure yet (still planning)"
@@ -537,17 +546,21 @@ export default function Contact() {
                         <h3 className="font-display text-xl font-semibold text-noir">
                           Where do we send the quote?
                         </h3>
+                        <p className="-mt-1 font-serif text-base text-stone">
+                          First name, last name and email are required so we can
+                          reach you with your quote.
+                        </p>
                         <div className="grid gap-4 sm:grid-cols-2">
                           <input
                             required
-                            placeholder="First name"
+                            placeholder="First name *"
                             value={data.firstName}
                             onChange={(e) => set("firstName", e.target.value)}
                             className={field}
                           />
                           <input
                             required
-                            placeholder="Last name"
+                            placeholder="Last name *"
                             value={data.lastName}
                             onChange={(e) => set("lastName", e.target.value)}
                             className={field}
@@ -556,11 +569,20 @@ export default function Contact() {
                         <input
                           required
                           type="email"
-                          placeholder="Email"
+                          placeholder="Email *"
                           value={data.email}
                           onChange={(e) => set("email", e.target.value)}
                           className={field}
                         />
+                        {step === 4 && !contactOk && (
+                          <p className="font-sans text-sm text-red-700/80">
+                            Please add your first name, last name and a valid email
+                            {data.callback
+                              ? ", plus your phone, best day and time to call,"
+                              : ""}{" "}
+                            to send your inquiry.
+                          </p>
+                        )}
 
                         {/* Callback opt-in */}
                         <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-noir/15 bg-ivory px-4 py-3">
@@ -642,8 +664,8 @@ export default function Contact() {
                   ) : (
                     <button
                       type="submit"
-                      disabled={sending}
-                      className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-gold/25 disabled:cursor-wait disabled:opacity-60"
+                      disabled={sending || !contactOk}
+                      className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-gold/25 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:shadow-none"
                     >
                       {sending ? "Sending…" : "Send inquiry"}
                       <Send className="size-4" />
