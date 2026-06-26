@@ -1,0 +1,317 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   ROYAL FRENCH CRÊPE — Parisian premium design system
+   Palette: warm ivory cream · espresso noir · brushed gold · bordeaux
+   Type: Playfair Display (display) · Cormorant Garamond (serif) · Geist (sans)
+   ============================================================ */
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+
+  /* Brand color utilities → bg-cream, text-gold, border-noir/20, etc. */
+  --color-cream: var(--cream);
+  --color-ivory: var(--ivory);
+  --color-noir: var(--noir);
+  --color-espresso: var(--espresso);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-bordeaux: var(--bordeaux);
+  --color-stone: var(--stone);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --cream: oklch(0.971 0.012 84);
+  --ivory: oklch(0.988 0.008 88);
+  --noir: oklch(0.205 0.012 60);
+  --espresso: oklch(0.27 0.02 55);
+  --gold: oklch(0.74 0.105 78);
+  --gold-soft: oklch(0.84 0.07 82);
+  --bordeaux: oklch(0.38 0.12 18);
+  --stone: oklch(0.55 0.012 70);
+
+  --background: var(--cream);
+  --foreground: var(--noir);
+  --card: var(--ivory);
+  --card-foreground: var(--noir);
+  --primary: var(--noir);
+  --primary-foreground: var(--ivory);
+  --secondary: oklch(0.93 0.012 82);
+  --secondary-foreground: var(--noir);
+  --muted: oklch(0.93 0.01 82);
+  --muted-foreground: var(--stone);
+  --accent: var(--gold);
+  --accent-foreground: var(--noir);
+  --border: oklch(0.205 0.012 60 / 12%);
+  --input: oklch(0.205 0.012 60 / 15%);
+  --ring: var(--gold);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: var(--gold);
+    color: var(--noir);
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  /* Small caps eyebrow label */
+  .eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gold);
+  }
+
+  /* Thin gold rule */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--gold) 50%,
+      transparent
+    );
+  }
+
+  /* French tricolor rule — blue · white · red (Bleu-Blanc-Rouge) */
+  .rule-tricolor {
+    height: 3px;
+    background: linear-gradient(
+      to right,
+      #0055a4 0,
+      #0055a4 33.333%,
+      #ffffff 33.333%,
+      #ffffff 66.666%,
+      #ef4135 66.666%,
+      #ef4135 100%
+    );
+    box-shadow: 0 0 0 0.5px oklch(0.205 0.012 60 / 0.08);
+  }
+  /* Centered, fading tricolor accent for use under headings */
+  .rule-tricolor-accent {
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      #0055a4 0,
+      #0055a4 33.333%,
+      #f3f0e8 33.333%,
+      #f3f0e8 66.666%,
+      #ef4135 66.666%,
+      #ef4135 100%
+    );
+  }
+
+  /* Gold text gradient for accents */
+  .text-gold-gradient {
+    background-image: linear-gradient(
+      120deg,
+      oklch(0.82 0.09 82),
+      oklch(0.7 0.12 70),
+      oklch(0.88 0.07 86)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Gold-foil shimmer — mouse-reactive light band (--foil = 0..100) */
+  .text-foil {
+    --foil: 50%;
+    background-image: linear-gradient(
+      100deg,
+      oklch(0.72 0.11 76) 0%,
+      oklch(0.64 0.12 66) calc(var(--foil) - 22%),
+      oklch(0.97 0.05 92) var(--foil),
+      oklch(0.64 0.12 66) calc(var(--foil) + 22%),
+      oklch(0.78 0.1 80) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Consistent editorial grade for photography */
+  .graded {
+    filter: saturate(1.06) contrast(1.05) brightness(1.02) sepia(0.05);
+  }
+
+  /* Paper grain noise overlay */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .bg-noir {
+    background-color: var(--noir);
+  }
+  .bg-espresso {
+    background-color: var(--espresso);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 38s linear infinite;
+  }
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+  /* Slow cinematic Ken Burns zoom for background media */
+  @keyframes kenburns {
+    from {
+      transform: scale(1.02);
+    }
+    to {
+      transform: scale(1.13);
+    }
+  }
+  .animate-kenburns {
+    animation: kenburns 26s ease-in-out infinite alternate;
+  }
+  /* Sheen sweep across buttons on hover */
+  .btn-sweep {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-sweep::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      120deg,
+      transparent 20%,
+      oklch(1 0 0 / 0.4) 50%,
+      transparent 80%
+    );
+    transform: translateX(-130%);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .btn-sweep:hover::after {
+    transform: translateX(130%);
+  }
+  /* Editorial gold hairline photo frame */
+  .frame-gold {
+    position: relative;
+  }
+  .frame-gold::after {
+    content: "";
+    position: absolute;
+    inset: 0.6rem;
+    border: 1px solid oklch(0.84 0.07 82 / 0.55);
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+/* Visible keyboard focus (a11y) */
+@layer base {
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* Respect reduced-motion — disable non-essential animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-float-slow {
+    animation: none !important;
+  }
+}
