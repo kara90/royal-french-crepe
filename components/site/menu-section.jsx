@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { menu, menuCategories, tierBlurb } from "@/lib/menu";
 
 function Badge({ children }) {
@@ -23,7 +18,7 @@ function Badge({ children }) {
   );
 }
 
-function Row({ item, open, onToggle, onPreview, index }) {
+function Row({ item, open, onToggle, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
@@ -35,19 +30,17 @@ function Row({ item, open, onToggle, onPreview, index }) {
       <button
         type="button"
         onClick={onToggle}
-        onMouseEnter={() => onPreview(item.img)}
-        onMouseLeave={() => onPreview(null)}
         data-open={open ? "true" : "false"}
         className="group flex w-full cursor-pointer items-center gap-4 py-4 text-left"
       >
-        {/* Thumbnail — mobile/tablet only; desktop uses the cursor-follow preview */}
-        <span className="relative size-14 shrink-0 overflow-hidden rounded-lg ring-1 ring-noir/10 md:hidden">
+        {/* Product image — always visible */}
+        <span className="relative size-24 shrink-0 overflow-hidden rounded-lg ring-1 ring-noir/10 shadow-sm">
           <Image
             src={item.img}
             alt={item.name}
             fill
-            sizes="56px"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="96px"
+            className="graded object-cover transition-transform duration-500 group-hover:scale-110"
           />
         </span>
 
@@ -64,18 +57,17 @@ function Row({ item, open, onToggle, onPreview, index }) {
             {item.tag && <Badge>{item.tag}</Badge>}
           </span>
 
-          {/* Ingredient reveal */}
-          <span className="grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-data-[open=true]:grid-rows-[1fr] group-data-[open=true]:opacity-100">
-            <span className="overflow-hidden">
-              <span className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5 font-serif text-[0.95rem] leading-snug text-espresso/80">
-                {item.ingredients.map((ing, i) => (
-                  <span key={i} className="flex items-center">
-                    {i > 0 && <span className="mr-2 text-gold/70">·</span>}
-                    {ing}
-                  </span>
-                ))}
+          {/* Ingredients — one-line teaser always shown; full list on hover/tap */}
+          <span className="mt-1.5 line-clamp-1 font-serif text-[0.95rem] leading-snug text-espresso/65 group-hover:hidden group-data-[open=true]:hidden">
+            {item.ingredients.join(" · ")}
+          </span>
+          <span className="mt-1.5 hidden flex-wrap items-center gap-x-2 gap-y-0.5 font-serif text-[0.95rem] leading-snug text-espresso/85 group-hover:flex group-data-[open=true]:flex">
+            {item.ingredients.map((ing, i) => (
+              <span key={i} className="flex items-center">
+                {i > 0 && <span className="mr-2 text-gold/70">·</span>}
+                {ing}
               </span>
-            </span>
+            ))}
           </span>
         </span>
       </button>
@@ -86,13 +78,7 @@ function Row({ item, open, onToggle, onPreview, index }) {
 export default function MenuSection() {
   const [active, setActive] = useState("classic");
   const [open, setOpen] = useState(() => new Set());
-  const [preview, setPreview] = useState(null);
   const items = menu[active];
-
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 350, damping: 30, mass: 0.5 });
-  const sy = useSpring(py, { stiffness: 350, damping: 30, mass: 0.5 });
 
   const toggle = (key) =>
     setOpen((prev) => {
@@ -102,14 +88,7 @@ export default function MenuSection() {
     });
 
   return (
-    <section
-      id="menu"
-      className="relative bg-cream py-24 sm:py-32"
-      onMouseMove={(e) => {
-        px.set(e.clientX);
-        py.set(e.clientY);
-      }}
-    >
+    <section id="menu" className="relative bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-5xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow">02 — La Carte</p>
@@ -118,7 +97,7 @@ export default function MenuSection() {
           </h2>
           <p className="mt-5 font-serif text-lg leading-relaxed text-espresso/80">
             From everyday Classics to our caviar-crowned Royales. Hover or tap any
-            crêpe to reveal exactly what goes inside.
+            crêpe to reveal every ingredient.
           </p>
         </div>
 
@@ -161,7 +140,6 @@ export default function MenuSection() {
                     index={i}
                     open={open.has(key)}
                     onToggle={() => toggle(key)}
-                    onPreview={setPreview}
                   />
                 );
               })}
@@ -174,31 +152,6 @@ export default function MenuSection() {
           accommodated.
         </p>
       </div>
-
-      {/* Cursor-follow preview (desktop) */}
-      <AnimatePresence>
-        {preview && (
-          <motion.div
-            style={{ x: sx, y: sy }}
-            className="pointer-events-none fixed left-0 top-0 z-50 hidden md:block"
-          >
-            <motion.div
-              key={preview}
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1, rotate: -4 }}
-              exit={{ opacity: 0, scale: 0.85 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="frame-gold relative h-64 w-52 -translate-x-1/2 -translate-y-[114%] overflow-hidden rounded-sm shadow-2xl shadow-black/50"
-            >
-              <img
-                src={preview}
-                alt=""
-                className="graded h-full w-full object-cover"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
