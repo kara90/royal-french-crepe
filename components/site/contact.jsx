@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, Check, Phone, ArrowRight, ArrowLeft } from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
+import { menu, menuCategories } from "@/lib/menu";
+
+const MAX_CREPES = 5;
 
 const EMAIL = site.email;
 const occasions = [
@@ -17,7 +21,6 @@ const occasions = [
   "Other",
 ];
 const guestRanges = ["Up to 25", "25–50", "50–100", "100–250", "250+"];
-const styleOptions = ["Classic", "Premium", "Royal", "Caviar", "Coffee & Tea"];
 
 // "14:30" → "2:30 PM"
 const to12h = (t) => {
@@ -37,9 +40,10 @@ export default function Contact() {
   const [data, setData] = useState({
     occasion: "",
     date: "",
+    eventTime: "",
     guests: "",
     location: "",
-    styles: [],
+    crepes: [],
     firstName: "",
     lastName: "",
     email: "",
@@ -49,20 +53,21 @@ export default function Contact() {
     callbackDay: "",
     callbackTime: "",
   });
+  const [crepeCat, setCrepeCat] = useState("classic");
 
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
-  const toggleStyle = (s) =>
-    setData((d) => ({
-      ...d,
-      styles: d.styles.includes(s)
-        ? d.styles.filter((x) => x !== s)
-        : [...d.styles, s],
-    }));
+  const toggleCrepe = (name) =>
+    setData((d) => {
+      if (d.crepes.includes(name))
+        return { ...d, crepes: d.crepes.filter((x) => x !== name) };
+      if (d.crepes.length >= MAX_CREPES) return d;
+      return { ...d, crepes: [...d.crepes, name] };
+    });
 
   const canNext =
     (step === 0 && data.occasion) ||
-    (step === 1 && data.guests) ||
-    (step === 2 && data.styles.length) ||
+    (step === 1 && data.date && data.eventTime && data.guests && data.location) ||
+    (step === 2 && data.crepes.length) ||
     step === 3 ||
     step === 4;
 
@@ -93,9 +98,10 @@ export default function Contact() {
     const body = [
       `Occasion: ${data.occasion}`,
       `Date: ${data.date || "—"}`,
+      `Event time: ${to12h(data.eventTime)}`,
       `Guests: ${data.guests}`,
       `Location: ${data.location || "—"}`,
-      `Crêpe styles: ${data.styles.join(", ")}`,
+      `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
       "",
       `Name: ${fullName}`,
       `Email: ${data.email}`,
@@ -123,9 +129,10 @@ export default function Contact() {
         botcheck: "",
         Occasion: data.occasion,
         Date: data.date || "—",
+        "Event time": to12h(data.eventTime),
         Guests: data.guests,
         Location: data.location || "—",
-        "Crêpe styles": data.styles.join(", "),
+        "Crêpes wanted": data.crepes.join(", ") || "—",
         "First name": data.firstName,
         "Last name": data.lastName,
         Email: data.email,
@@ -306,20 +313,33 @@ export default function Contact() {
                         <h3 className="font-display text-xl font-semibold text-noir">
                           When &amp; how many?
                         </h3>
-                        <div>
-                          <label className="font-sans text-sm text-espresso/80">
-                            Event date
-                          </label>
-                          <input
-                            type="date"
-                            value={data.date}
-                            onChange={(e) => set("date", e.target.value)}
-                            className={`${field} mt-1.5`}
-                          />
+                        <div className="grid gap-4 sm:grid-cols-2">
+                          <div>
+                            <label className="font-sans text-sm text-espresso/80">
+                              Event date *
+                            </label>
+                            <input
+                              type="date"
+                              value={data.date}
+                              onChange={(e) => set("date", e.target.value)}
+                              className={`${field} mt-1.5`}
+                            />
+                          </div>
+                          <div>
+                            <label className="font-sans text-sm text-espresso/80">
+                              Event time *
+                            </label>
+                            <input
+                              type="time"
+                              value={data.eventTime}
+                              onChange={(e) => set("eventTime", e.target.value)}
+                              className={`${field} mt-1.5`}
+                            />
+                          </div>
                         </div>
                         <div>
                           <label className="font-sans text-sm text-espresso/80">
-                            Guest count
+                            Guest count *
                           </label>
                           <div className="mt-2 flex flex-wrap gap-2.5">
                             {guestRanges.map((g) => (
@@ -336,7 +356,7 @@ export default function Contact() {
                         </div>
                         <div>
                           <label className="font-sans text-sm text-espresso/80">
-                            Location / city
+                            Location / city *
                           </label>
                           <input
                             placeholder="e.g. Beverly Hills, CA"
@@ -351,22 +371,78 @@ export default function Contact() {
                     {step === 2 && (
                       <div>
                         <h3 className="font-display text-xl font-semibold text-noir">
-                          Which crêpes are calling you?
+                          Pick the crêpes you love
                         </h3>
                         <p className="mt-2 font-serif text-base text-stone">
-                          Pick any that interest you — we&apos;ll build the menu with you.
+                          Browse by tier and choose up to {MAX_CREPES}.{" "}
+                          <span className="font-sans text-sm font-semibold text-gold">
+                            {data.crepes.length}/{MAX_CREPES} selected
+                          </span>
                         </p>
-                        <div className="mt-5 flex flex-wrap gap-2.5">
-                          {styleOptions.map((s) => (
+
+                        {/* Tier filter */}
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {menuCategories.map((c) => (
                             <button
                               type="button"
-                              key={s}
-                              onClick={() => toggleStyle(s)}
-                              className={chip(data.styles.includes(s))}
+                              key={c.id}
+                              onClick={() => setCrepeCat(c.id)}
+                              className={`rounded-full px-3.5 py-1.5 font-sans text-xs transition-all duration-200 ${
+                                crepeCat === c.id
+                                  ? "bg-noir text-ivory"
+                                  : "border border-noir/15 text-espresso/80 hover:border-noir/40"
+                              }`}
                             >
-                              {s}
+                              {c.label}
                             </button>
                           ))}
+                        </div>
+
+                        {/* Crêpe list with photos */}
+                        <div className="mt-3 max-h-64 space-y-1.5 overflow-y-auto pr-1">
+                          {menu[crepeCat].map((item) => {
+                            const selected = data.crepes.includes(item.name);
+                            const atMax =
+                              !selected && data.crepes.length >= MAX_CREPES;
+                            return (
+                              <button
+                                type="button"
+                                key={item.name}
+                                disabled={atMax}
+                                onClick={() => toggleCrepe(item.name)}
+                                className={`flex w-full items-center gap-3 rounded-lg border p-2 text-left transition-colors duration-200 ${
+                                  selected
+                                    ? "border-gold bg-gold/10"
+                                    : "border-noir/12 hover:border-noir/30"
+                                } ${
+                                  atMax
+                                    ? "cursor-not-allowed opacity-40"
+                                    : "cursor-pointer"
+                                }`}
+                              >
+                                <span className="relative size-11 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
+                                  <Image
+                                    src={item.img}
+                                    alt={item.name}
+                                    fill
+                                    sizes="44px"
+                                    className="graded object-cover"
+                                  />
+                                </span>
+                                <span className="min-w-0 flex-1">
+                                  <span className="block truncate font-display text-base font-semibold text-noir">
+                                    {item.name}
+                                  </span>
+                                  <span className="font-sans text-[0.6rem] uppercase tracking-widest text-stone">
+                                    {item.type}
+                                  </span>
+                                </span>
+                                {selected && (
+                                  <Check className="size-4 shrink-0 text-gold" />
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
@@ -451,6 +527,7 @@ export default function Contact() {
                                 </label>
                                 <input
                                   type="date"
+                                  required={data.callback}
                                   value={data.callbackDay}
                                   onChange={(e) => set("callbackDay", e.target.value)}
                                   className={`${field} mt-1.5`}
@@ -462,6 +539,7 @@ export default function Contact() {
                                 </label>
                                 <input
                                   type="time"
+                                  required={data.callback}
                                   value={data.callbackTime}
                                   onChange={(e) => set("callbackTime", e.target.value)}
                                   className={`${field} mt-1.5`}
