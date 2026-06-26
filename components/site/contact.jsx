@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Send, Check, Phone, ArrowRight, ArrowLeft } from "lucide-react";
+import { Send, Check, ArrowRight, ArrowLeft } from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
 import { menu, menuCategories } from "@/lib/menu";
@@ -218,24 +218,6 @@ export default function Contact() {
 
             <div className="mt-8 space-y-3">
               <a
-                href={site.phoneHref}
-                className="flex items-center gap-3 font-sans text-base text-espresso transition-colors hover:text-gold"
-              >
-                <span className="inline-flex size-10 items-center justify-center rounded-full border border-noir/15">
-                  <Phone className="size-4" />
-                </span>
-                {site.phone}
-              </a>
-              <a
-                href={`mailto:${EMAIL}`}
-                className="flex items-center gap-3 font-sans text-base text-espresso transition-colors hover:text-gold"
-              >
-                <span className="inline-flex size-10 items-center justify-center rounded-full border border-noir/15">
-                  <Mail className="size-4" />
-                </span>
-                {EMAIL}
-              </a>
-              <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -277,8 +259,8 @@ export default function Contact() {
                 </h3>
                 <p className="mt-3 max-w-sm font-serif text-base text-espresso/80">
                   {useWeb3
-                    ? `We've received your inquiry and will get back to you with a custom quote. You can also reach us anytime at ${EMAIL}.`
-                    : `Your email app just opened with everything filled in — hit send and we'll get back to you with a custom quote. Or write us directly at ${EMAIL}.`}
+                    ? "We've received your inquiry and will get back to you with a custom quote — usually within a day."
+                    : "Your email app just opened with everything filled in — hit send and we'll get back to you with a custom quote."}
                 </p>
               </div>
             ) : (

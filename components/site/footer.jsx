@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Mail, Phone } from "lucide-react";
 import { Instagram } from "./icons";
-import { site } from "@/lib/site";
 import Tricolor from "./tricolor";
 
 const nav = [
@@ -64,18 +62,10 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href={site.phoneHref}
-                  className="flex items-center gap-2 font-serif text-base text-ivory/70 transition-colors hover:text-gold"
+                  href="#contact"
+                  className="inline-flex items-center gap-1.5 font-serif text-base text-ivory/70 transition-colors hover:text-gold"
                 >
-                  <Phone className="size-4" /> {site.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:royalfrenchcrepe@gmail.com"
-                  className="flex items-center gap-2 font-serif text-base text-ivory/70 transition-colors hover:text-gold"
-                >
-                  <Mail className="size-4" /> royalfrenchcrepe@gmail.com
+                  Book catering &amp; inquiries →
                 </a>
               </li>
               <li>
