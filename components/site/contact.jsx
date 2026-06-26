@@ -8,7 +8,8 @@ import { Instagram } from "./icons";
 import { site } from "@/lib/site";
 import { menu, menuCategories } from "@/lib/menu";
 
-const MAX_CREPES = 5;
+const MAX_CREPES = 6;
+const iceCreamFlavors = ["Vanilla", "Chocolate"];
 
 const EMAIL = site.email;
 const occasions = [
@@ -46,6 +47,7 @@ export default function Contact() {
     guests: "",
     location: "",
     crepes: [],
+    iceCream: [],
     firstName: "",
     lastName: "",
     email: "",
@@ -65,6 +67,13 @@ export default function Contact() {
       if (d.crepes.length >= MAX_CREPES) return d;
       return { ...d, crepes: [...d.crepes, name] };
     });
+  const toggleIceCream = (f) =>
+    setData((d) => ({
+      ...d,
+      iceCream: d.iceCream.includes(f)
+        ? d.iceCream.filter((x) => x !== f)
+        : [...d.iceCream, f],
+    }));
 
   const canNext =
     (step === 0 && data.occasion) ||
@@ -111,6 +120,9 @@ export default function Contact() {
       `Guests: ${data.guests}`,
       `Location: ${data.location || "—"}`,
       `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
+      `Natural ice cream: ${
+        data.iceCream.length ? data.iceCream.join(", ") : "Not requested"
+      }`,
       "",
       `Name: ${fullName}`,
       `Email: ${data.email}`,
@@ -142,6 +154,9 @@ export default function Contact() {
         Guests: data.guests,
         Location: data.location || "—",
         "Crêpes wanted": data.crepes.join(", ") || "—",
+        "Natural ice cream": data.iceCream.length
+          ? data.iceCream.join(", ")
+          : "Not requested",
         "First name": data.firstName,
         "Last name": data.lastName,
         Email: data.email,
@@ -484,6 +499,33 @@ export default function Contact() {
                               </button>
                             );
                           })}
+                        </div>
+
+                        {/* Optional natural ice cream */}
+                        <div className="mt-5 rounded-lg border border-noir/12 bg-ivory p-4">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-display text-base font-semibold text-noir">
+                              Natural ice cream
+                            </span>
+                            <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.6rem] uppercase tracking-widest text-stone">
+                              Optional
+                            </span>
+                          </div>
+                          <p className="mt-1 font-serif text-sm text-stone">
+                            Add a scoop of natural ice cream — choose a flavor, or skip it.
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {iceCreamFlavors.map((f) => (
+                              <button
+                                type="button"
+                                key={f}
+                                onClick={() => toggleIceCream(f)}
+                                className={chip(data.iceCream.includes(f))}
+                              >
+                                {f}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     )}
