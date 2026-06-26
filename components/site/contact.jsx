@@ -24,6 +24,7 @@ const STEPS = ["Occasion", "Details", "Crêpes", "You"];
 export default function Contact() {
   const [step, setStep] = useState(0);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [data, setData] = useState({
     occasion: "",
     date: "",
@@ -51,7 +52,16 @@ export default function Contact() {
     (step === 2 && data.styles.length) ||
     step === 3;
 
-  const submit = (e) => {
+  const KEY = site.web3formsKey;
+  const useWeb3 = KEY && !KEY.includes("PASTE");
+
+  const openMailto = (subject, body) => {
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
+  const submit = async (e) => {
     e.preventDefault();
     const subject = `Catering inquiry — ${data.occasion || "Event"}${
       data.name ? ` (${data.name})` : ""
@@ -69,10 +79,50 @@ export default function Contact() {
       "",
       data.message,
     ].join("\n");
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+
+    // No key yet → fall back to the visitor's email app.
+    if (!useWeb3) {
+      openMailto(subject, body);
+      setSent(true);
+      return;
+    }
+
+    // Send straight to the inbox via Web3Forms.
+    setSending(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: KEY,
+          subject,
+          from_name: "Royal French Crêpe — Website",
+          replyto: data.email,
+          botcheck: "",
+          Occasion: data.occasion,
+          Date: data.date || "—",
+          Guests: data.guests,
+          Location: data.location || "—",
+          "Crêpe styles": data.styles.join(", "),
+          Name: data.name,
+          Email: data.email,
+          Phone: data.phone,
+          Message: data.message,
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setSent(true);
+      } else {
+        throw new Error(json.message || "send failed");
+      }
+    } catch {
+      // Network/API hiccup → don't lose the lead, open their email app.
+      openMailto(subject, body);
+      setSent(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const field =
@@ -163,9 +213,9 @@ export default function Contact() {
                   Merci, {data.name || "friend"}!
                 </h3>
                 <p className="mt-3 max-w-sm font-serif text-base text-espresso/80">
-                  Your email app just opened with everything filled in — hit send and
-                  we&apos;ll get back to you with a custom quote. Or write us directly
-                  at {EMAIL}.
+                  {useWeb3
+                    ? `We've received your inquiry and will get back to you with a custom quote. You can also reach us anytime at ${EMAIL}.`
+                    : `Your email app just opened with everything filled in — hit send and we'll get back to you with a custom quote. Or write us directly at ${EMAIL}.`}
                 </p>
               </div>
             ) : (
@@ -353,9 +403,11 @@ export default function Contact() {
                   ) : (
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-gold/25"
+                      disabled={sending}
+                      className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-gold/25 disabled:cursor-wait disabled:opacity-60"
                     >
-                      Send inquiry <Send className="size-4" />
+                      {sending ? "Sending…" : "Send inquiry"}
+                      <Send className="size-4" />
                     </button>
                   )}
                 </div>
