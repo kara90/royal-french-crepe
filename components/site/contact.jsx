@@ -19,7 +19,7 @@ const occasions = [
 const guestRanges = ["Up to 25", "25–50", "50–100", "100–250", "250+"];
 const styleOptions = ["Classic", "Premium", "Royal", "Caviar", "Coffee & Tea"];
 
-const STEPS = ["Occasion", "Details", "Crêpes", "You"];
+const STEPS = ["Occasion", "Details", "Crêpes", "Your idea", "You"];
 
 export default function Contact() {
   const [step, setStep] = useState(0);
@@ -50,7 +50,8 @@ export default function Contact() {
     (step === 0 && data.occasion) ||
     (step === 1 && data.guests) ||
     (step === 2 && data.styles.length) ||
-    step === 3;
+    step === 3 ||
+    step === 4;
 
   const KEY = site.web3formsKey;
   const useWeb3 = KEY && !KEY.includes("PASTE");
@@ -340,6 +341,26 @@ export default function Contact() {
                     )}
 
                     {step === 3 && (
+                      <div>
+                        <h3 className="font-display text-xl font-semibold text-noir">
+                          Tell us what you&apos;re imagining
+                        </h3>
+                        <p className="mt-2 font-serif text-base text-stone">
+                          The vibe, must-have crêpes, dietary needs, timing — anything
+                          that&apos;ll make it perfect. The more detail, the better your
+                          quote.
+                        </p>
+                        <textarea
+                          rows={6}
+                          placeholder="e.g. Sunset garden wedding for ~80 guests. We'd love a live crêpe station — sweet & savory, a few vegan options, and the Marie Antoinette for dessert. Setup around 5pm…"
+                          value={data.message}
+                          onChange={(e) => set("message", e.target.value)}
+                          className={`${field} mt-4 resize-none`}
+                        />
+                      </div>
+                    )}
+
+                    {step === 4 && (
                       <div className="space-y-4">
                         <h3 className="font-display text-xl font-semibold text-noir">
                           Where do we send the quote?
@@ -367,13 +388,6 @@ export default function Contact() {
                           onChange={(e) => set("phone", e.target.value)}
                           className={field}
                         />
-                        <textarea
-                          rows={3}
-                          placeholder="Anything else we should know?"
-                          value={data.message}
-                          onChange={(e) => set("message", e.target.value)}
-                          className={`${field} resize-none`}
-                        />
                       </div>
                     )}
                   </motion.div>
@@ -391,7 +405,7 @@ export default function Contact() {
                     <ArrowLeft className="size-4" /> Back
                   </button>
 
-                  {step < 3 ? (
+                  {step < 4 ? (
                     <button
                       type="button"
                       disabled={!canNext}
