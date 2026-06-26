@@ -203,7 +203,7 @@ export default function Contact() {
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Left — invitation + direct contact */}
           <div>
-            <p className="eyebrow">Contactez-Nous</p>
+            <p className="eyebrow">07 — Contactez-Nous</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-noir sm:text-5xl">
               Let&apos;s plan something
               <br />

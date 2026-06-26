@@ -64,31 +64,31 @@ export default function Catering() {
 
           <Reveal delay={0.12}>
             <div className="grid grid-cols-2 gap-4">
-              <div className="frame-gold relative col-span-2 aspect-[16/10] overflow-hidden rounded-sm shadow-xl shadow-noir/10">
+              <div className="group frame-gold relative col-span-2 aspect-[16/10] overflow-hidden rounded-sm shadow-xl shadow-noir/10">
                 <Image
                   src="/images/catering-oceanside.jpg"
                   alt="A Royal French Crêpe chef preparing crêpes at an oceanside California event"
                   fill
                   sizes="(max-width: 1024px) 90vw, 45vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-sm shadow-lg shadow-noir/10">
+              <div className="group relative aspect-square overflow-hidden rounded-sm shadow-lg shadow-noir/10">
                 <Image
                   src="/images/catering-event.jpg"
                   alt="Guests enjoying a crêpe catering station with smoked salmon and caviar"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-sm shadow-lg shadow-noir/10">
+              <div className="group relative aspect-square overflow-hidden rounded-sm shadow-lg shadow-noir/10">
                 <Image
                   src="/images/catering-umbrella.jpg"
                   alt="Plated crêpes with salmon, caviar and fresh strawberries at a garden party"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </div>
             </div>

@@ -60,7 +60,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-4 hidden border border-gold/20 sm:block" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-4xl px-6 pt-24 text-center">
+      <div className="relative z-10 mx-auto max-w-4xl px-6 pb-24 pt-28 text-center sm:pb-28">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}

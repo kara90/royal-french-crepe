@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Reveal from "./reveal";
 import BgVideo from "./bg-video";
+import Tilt from "./tilt";
 import { ChefHat, Leaf, Flame, Crown } from "lucide-react";
 
 const features = [
@@ -66,7 +67,10 @@ export default function Why() {
         {/* Brand story — "Let them eat crêpes" */}
         <div className="mt-20 flex flex-col items-center gap-10 md:flex-row md:justify-center md:gap-16">
           <Reveal>
-            <div className="relative size-52 shrink-0 overflow-hidden rounded-full ring-1 ring-gold/40 shadow-2xl shadow-black/40 sm:size-60">
+            <Tilt
+              max={9}
+              className="relative size-52 shrink-0 overflow-hidden rounded-full ring-1 ring-gold/40 shadow-2xl shadow-black/40 sm:size-60"
+            >
               <Image
                 src="/images/let-them-eat-crepes.jpg"
                 alt="Marie Antoinette holding a crêpe — “Let them eat crêpes”"
@@ -74,7 +78,7 @@ export default function Why() {
                 sizes="240px"
                 className="object-cover"
               />
-            </div>
+            </Tilt>
           </Reveal>
           <Reveal delay={0.1} className="max-w-md text-center md:text-left">
             <p className="eyebrow">Notre Marque</p>

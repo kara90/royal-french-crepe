@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs uppercase tracking-widest text-gold">
+            <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
               Explore
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -56,7 +56,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs uppercase tracking-widest text-gold">
+            <h3 className="font-sans text-sm uppercase tracking-widest text-gold">
               Get in touch
             </h3>
             <ul className="mt-4 space-y-3">
@@ -87,14 +87,14 @@ export default function Footer() {
 
         <div className="mt-14 border-t border-ivory/10 pt-7">
           <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="font-sans text-xs text-ivory/50">
+            <p className="font-sans text-sm text-ivory/60">
               © {new Date().getFullYear()} Royal French Crêpe · All Rights Reserved
             </p>
-            <p className="font-serif text-sm italic text-ivory/50">
+            <p className="font-serif text-base italic text-ivory/60">
               Made the French way — slowly, and with butter.
             </p>
           </div>
-          <p className="mt-6 text-center font-sans text-xs tracking-wide text-ivory/45">
+          <p className="mt-6 text-center font-sans text-sm tracking-wide text-ivory/55">
             Designed, built &amp; managed by{" "}
             <a
               href="https://beyondtheedgestudio.com"

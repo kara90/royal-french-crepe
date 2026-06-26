@@ -14,7 +14,7 @@ export default function Locations() {
       <div className="pointer-events-none absolute -left-40 bottom-0 h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,oklch(0.74_0.105_78/0.12),transparent_65%)]" />
       <div className="relative mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">Où Nous Trouver</p>
+          <p className="eyebrow">06 — Où Nous Trouver</p>
           <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             Find us
           </h2>
@@ -26,8 +26,8 @@ export default function Locations() {
             { city: "Las Vegas", note: "Nevada" },
           ].map((loc, i) => (
             <Reveal key={loc.city} delay={i * 0.1}>
-              <div className="group h-full rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-8 transition-all duration-500 hover:border-gold/40">
-                <MapPin className="size-6 text-gold" />
+              <div className="group h-full rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-8 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:bg-ivory/[0.06] hover:shadow-2xl hover:shadow-black/30">
+                <MapPin className="size-6 text-gold transition-transform duration-500 group-hover:scale-110" />
                 <h3 className="mt-5 font-display text-2xl font-semibold">{loc.city}</h3>
                 <p className="mt-1 font-serif text-lg text-ivory/70">{loc.note}</p>
                 <p className="mt-5 font-serif text-base leading-relaxed text-ivory/60">
