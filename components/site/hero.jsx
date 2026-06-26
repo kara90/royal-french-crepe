@@ -136,12 +136,14 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.65 }}
-          className="mt-10 flex items-center justify-center gap-2 font-sans text-sm text-ivory/84"
+          className="mt-10 flex flex-col-reverse items-center justify-center gap-2.5 font-sans text-sm text-ivory/84 sm:flex-row sm:gap-2"
         >
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="size-3.5 fill-gold text-gold" />
-          ))}
-          <span className="ml-2 tracking-wide">
+          <span className="flex items-center gap-2">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="size-3.5 fill-gold text-gold" />
+            ))}
+          </span>
+          <span className="text-center tracking-wide sm:ml-2 sm:text-left">
             French chefs since 2007 · Paris → Marseille → California
           </span>
         </motion.div>
