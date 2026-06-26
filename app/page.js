@@ -36,8 +36,8 @@ export default function Home() {
         <Gallery />
         <KineticBand />
         <Locations />
-        <Faq />
         <Contact />
+        <Faq />
       </main>
       <Footer />
     </>
