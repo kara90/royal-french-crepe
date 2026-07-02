@@ -76,7 +76,7 @@ function Row({ item, open, onToggle, index }) {
 }
 
 export default function MenuSection() {
-  const [active, setActive] = useState("classic");
+  const [active, setActive] = useState("premium");
   const [open, setOpen] = useState(() => new Set());
   const items = menu[active];
 
