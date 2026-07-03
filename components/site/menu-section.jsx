@@ -91,7 +91,7 @@ export default function MenuSection() {
     <section id="menu" className="relative bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-5xl px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">02 — La Carte</p>
+          <p className="eyebrow">01 — La Carte</p>
           <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight text-noir sm:text-5xl">
             The carte, by tier
           </h2>

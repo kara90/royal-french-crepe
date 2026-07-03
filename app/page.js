@@ -13,10 +13,14 @@ import Catering from "@/components/site/catering";
 import Gallery from "@/components/site/gallery";
 import KineticBand from "@/components/site/kinetic-band";
 import Locations from "@/components/site/locations";
+import HowItWorks from "@/components/site/how-it-works";
+import StickyQuote from "@/components/site/sticky-quote";
 import Faq from "@/components/site/faq";
 import Contact from "@/components/site/contact";
 import Footer from "@/components/site/footer";
 
+// Section order = a cold-traffic funnel:
+// hook → differentiators → see it live → taste it → romance → offer → how → proof → find → act.
 export default function Home() {
   return (
     <>
@@ -25,20 +29,22 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Stats />
-        <Story />
         <Why />
         <VideoFeature />
         <MenuSection />
         <Caviar />
         <Louis />
+        <Story />
         <Heritage />
         <Catering />
+        <HowItWorks />
         <Gallery />
         <KineticBand />
         <Locations />
         <Contact />
         <Faq />
       </main>
+      <StickyQuote />
       <Footer />
     </>
   );

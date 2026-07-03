@@ -30,7 +30,7 @@ export default function Story() {
     <section id="story" className="relative bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">01 — Notre Histoire</p>
+          <p className="eyebrow">03 — Notre Histoire</p>
           <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight text-noir sm:text-5xl">
             From a Paris street corner
             <span className="block italic text-stone">to your celebration</span>

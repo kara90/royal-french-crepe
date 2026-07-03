@@ -68,7 +68,7 @@ export default function Hero() {
           className="mb-6 flex items-center justify-center gap-3 font-sans text-xs uppercase tracking-[0.32em] text-gold"
         >
           <span className="h-px w-8 bg-gold/60" />
-          Paris · Los Angeles · Las Vegas
+          French crêpe catering · Los Angeles · Las Vegas
           <span className="h-px w-8 bg-gold/60" />
         </motion.p>
 
@@ -89,9 +89,9 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.25 }}
           className="mx-auto mt-7 max-w-xl font-serif text-lg leading-relaxed text-ivory/85 text-pretty sm:text-xl"
         >
-          Handmade before your eyes by French chefs from Paris — sweet, savory and
-          Royal Ossetra caviar crêpes. Now serving LA, Las Vegas &amp; events across
-          California.
+          Sweet, savory and Royal Ossetra caviar crêpes, handmade in front of your
+          guests by chefs from Paris. Catering weddings, parties &amp; events across
+          LA, Las Vegas and all of California.
         </motion.p>
 
         <motion.p
@@ -115,10 +115,10 @@ export default function Hero() {
         >
           <Magnetic>
             <a
-              href="#catering"
+              href="#contact"
               className="btn-sweep group inline-flex cursor-pointer items-center gap-2 rounded-full bg-gold px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-[0_10px_40px_-10px_oklch(0.74_0.105_78/0.7)]"
             >
-              Book your event
+              Get your free quote
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </a>
           </Magnetic>
@@ -132,11 +132,20 @@ export default function Hero() {
           </Magnetic>
         </motion.div>
 
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.55 }}
+          className="mt-5 font-sans text-sm tracking-wide text-ivory/70"
+        >
+          Custom-quoted for your event · we reply within a day
+        </motion.p>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.65 }}
-          className="mt-10 flex flex-col-reverse items-center justify-center gap-2.5 font-sans text-sm text-ivory/84 sm:flex-row sm:gap-2"
+          className="mt-8 flex flex-col-reverse items-center justify-center gap-2.5 font-sans text-sm text-ivory/84 sm:flex-row sm:gap-2"
         >
           <span className="flex items-center gap-2">
             {[...Array(5)].map((_, i) => (

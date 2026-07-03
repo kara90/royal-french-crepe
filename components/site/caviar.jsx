@@ -34,7 +34,7 @@ export default function Caviar() {
         {/* Title, copy & cards — right */}
         <div className="order-1 lg:order-2">
           <Reveal>
-            <p className="eyebrow">03 — La Collection Royale</p>
+            <p className="eyebrow">02 — La Collection Royale</p>
             <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
               The crêpe, crowned with{" "}
               <span className="italic text-gold-gradient">Royal Ossetra caviar</span>

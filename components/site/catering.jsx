@@ -58,8 +58,11 @@ export default function Catering() {
               href="#contact"
               className="btn-sweep mt-10 inline-flex items-center gap-2 rounded-full bg-noir px-8 py-4 font-sans text-sm font-semibold uppercase tracking-wider text-ivory transition-all duration-300 hover:bg-espresso hover:shadow-lg hover:shadow-noir/20"
             >
-              Request a catering quote
+              Get your free quote
             </a>
+            <p className="mt-4 font-sans text-sm text-stone">
+              Free &amp; custom-quoted · we reply within a day
+            </p>
           </Reveal>
 
           <Reveal delay={0.12}>

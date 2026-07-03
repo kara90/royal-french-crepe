@@ -222,7 +222,7 @@ export default function Contact() {
             <p className="mt-7 max-w-md font-serif text-lg leading-relaxed text-espresso/85">
               Tell us about your event and we&apos;ll tailor a quote to your guest
               count, menu and location. Every celebration is custom — there are no
-              fixed prices, just the experience you want.
+              fixed prices, just the experience you want. We reply within a day.
             </p>
 
             <div className="mt-8 space-y-3">
