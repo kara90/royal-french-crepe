@@ -107,7 +107,7 @@ export default function MenuSection() {
             <button
               key={c.id}
               onClick={() => setActive(c.id)}
-              className={`cursor-pointer rounded-full px-5 py-2.5 font-sans text-sm transition-all duration-300 ${
+              className={`cursor-pointer rounded-full px-5 py-3 font-sans text-sm transition-all duration-300 sm:py-2.5 ${
                 active === c.id
                   ? "bg-noir text-ivory shadow-lg shadow-noir/15"
                   : "border border-noir/15 text-espresso/80 hover:border-noir/40"

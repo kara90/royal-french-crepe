@@ -93,6 +93,29 @@
     background: var(--gold);
     color: var(--noir);
   }
+
+  /* Gilded scrollbar — a quiet luxury detail */
+  html {
+    scrollbar-color: oklch(0.74 0.105 78 / 0.6) oklch(0.16 0.01 60);
+    scrollbar-width: thin;
+  }
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(0.16 0.01 60);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      oklch(0.74 0.105 78 / 0.75),
+      oklch(0.6 0.09 70 / 0.75)
+    );
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
 }
 
 @layer components {
@@ -113,15 +136,32 @@
     color: var(--gold);
   }
 
-  /* Thin gold rule */
+  /* Thin gold rule, crowned with a tiny diamond — the site's gilded signature */
   .rule-gold {
+    position: relative;
     height: 1px;
     background: linear-gradient(
       to right,
       transparent,
-      var(--gold) 50%,
+      var(--gold) 42%,
+      var(--gold) 46%,
+      transparent 46%,
+      transparent 54%,
+      var(--gold) 54%,
+      var(--gold) 58%,
       transparent
     );
+  }
+  .rule-gold::after {
+    content: "✦";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.55rem;
+    line-height: 1;
+    color: var(--gold);
+    background: transparent;
   }
 
   /* French tricolor rule — blue · white · red (Bleu-Blanc-Rouge) */
@@ -276,6 +316,7 @@
   /* Editorial gold hairline photo frame */
   .frame-gold {
     position: relative;
+    transition: box-shadow 0.6s ease;
   }
   .frame-gold::after {
     content: "";
@@ -284,6 +325,14 @@
     border: 1px solid oklch(0.84 0.07 82 / 0.55);
     pointer-events: none;
     z-index: 2;
+    transition: border-color 0.6s ease, inset 0.6s ease;
+  }
+  .frame-gold:hover {
+    box-shadow: 0 24px 60px -20px oklch(0.74 0.105 78 / 0.35);
+  }
+  .frame-gold:hover::after {
+    border-color: oklch(0.84 0.07 82 / 0.9);
+    inset: 0.85rem;
   }
 }
 

@@ -23,7 +23,9 @@ export default function Particles({ className = "", count = 42 }) {
       H = canvas.height = Math.max(1, r.height * dpr);
     };
     const init = () => {
-      parts = Array.from({ length: count }, () => ({
+      // Fewer particles on small screens — same atmosphere, lighter on batteries.
+      const n = window.innerWidth < 640 ? Math.ceil(count * 0.5) : count;
+      parts = Array.from({ length: n }, () => ({
         x: Math.random() * W,
         y: Math.random() * H,
         r: (Math.random() * 1.6 + 0.4) * dpr,
