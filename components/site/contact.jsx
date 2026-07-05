@@ -573,8 +573,8 @@ export default function Contact() {
                           ))}
                         </div>
 
-                        {/* Crêpe list with photos */}
-                        <div className="mt-3 max-h-64 space-y-1.5 overflow-y-auto pr-1">
+                        {/* Crêpe list with photos + ingredients (mirrors the menu) */}
+                        <div className="mt-3 max-h-96 space-y-2 overflow-y-auto pr-1">
                           {menu[crepeCat].map((item) => {
                             const selected = data.crepes.includes(item.name);
                             const atMax =
@@ -585,7 +585,7 @@ export default function Contact() {
                                 key={item.name}
                                 disabled={atMax}
                                 onClick={() => toggleCrepe(item.name)}
-                                className={`flex w-full items-center gap-3 rounded-lg border p-2 text-left transition-colors duration-200 ${
+                                className={`flex w-full items-center gap-3.5 rounded-lg border p-2.5 text-left transition-colors duration-200 ${
                                   selected
                                     ? "border-gold bg-gold/10"
                                     : "border-noir/12 hover:border-noir/30"
@@ -595,25 +595,30 @@ export default function Contact() {
                                     : "cursor-pointer"
                                 }`}
                               >
-                                <span className="relative size-11 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
+                                <span className="relative size-14 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
                                   <Image
                                     src={item.img}
                                     alt={item.name}
                                     fill
-                                    sizes="44px"
+                                    sizes="56px"
                                     className="graded object-cover"
                                   />
                                 </span>
                                 <span className="min-w-0 flex-1">
-                                  <span className="block truncate font-display text-base font-semibold text-noir">
-                                    {item.name}
+                                  <span className="flex items-baseline gap-2">
+                                    <span className="truncate font-display text-lg font-semibold text-noir">
+                                      {item.name}
+                                    </span>
+                                    <span className="shrink-0 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                                      {item.type}
+                                    </span>
                                   </span>
-                                  <span className="font-sans text-[0.7rem] uppercase tracking-widest text-stone">
-                                    {item.type}
+                                  <span className="mt-1 line-clamp-2 font-serif text-[0.9rem] leading-snug text-espresso/70">
+                                    {item.ingredients.join(" · ")}
                                   </span>
                                 </span>
                                 {selected && (
-                                  <Check className="size-4 shrink-0 text-gold" />
+                                  <Check className="size-5 shrink-0 text-gold" />
                                 )}
                               </button>
                             );
