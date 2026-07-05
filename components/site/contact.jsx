@@ -965,11 +965,16 @@ export default function Contact() {
                                           />
                                         </span>
                                         <span className="min-w-0 flex-1">
-                                          <span className="block truncate font-display text-lg font-semibold text-noir">
-                                            {item.name}
+                                          <span className="flex items-baseline gap-2">
+                                            <span className="truncate font-display text-lg font-semibold text-noir">
+                                              {item.name}
+                                            </span>
+                                            <span className="shrink-0 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                                              {item.type}
+                                            </span>
                                           </span>
-                                          <span className="font-sans text-xs uppercase tracking-widest text-stone">
-                                            {item.type}
+                                          <span className="mt-1 line-clamp-2 font-serif text-[0.9rem] leading-snug text-espresso/70">
+                                            {item.ingredients.join(" · ")}
                                           </span>
                                         </span>
                                         {selected && (
