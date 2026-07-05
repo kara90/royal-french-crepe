@@ -59,7 +59,7 @@ export default function Contact() {
     quickCrepes: "",
     quickEvent: "",
   });
-  const [crepeCat, setCrepeCat] = useState("classic");
+  const [crepeCat, setCrepeCat] = useState("premium");
   const [mode, setMode] = useState("guided"); // "guided" | "quick"
   const [quickBrowse, setQuickBrowse] = useState(false);
 
@@ -938,7 +938,7 @@ export default function Contact() {
                                   ))}
                                 </div>
                                 {/* Crêpe list with photos — tap to add above */}
-                                <div className="mt-3 max-h-72 space-y-1.5 overflow-y-auto pr-1">
+                                <div className="mt-3 max-h-96 space-y-2 overflow-y-auto pr-1">
                                   {menu[crepeCat].map((item) => {
                                     const selected = data.quickCrepes
                                       .split(",")
@@ -949,31 +949,31 @@ export default function Contact() {
                                         type="button"
                                         key={item.name}
                                         onClick={() => toggleQuickCrepe(item.name)}
-                                        className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border p-2 text-left transition-colors duration-200 ${
+                                        className={`flex w-full cursor-pointer items-center gap-3.5 rounded-lg border p-2.5 text-left transition-colors duration-200 ${
                                           selected
                                             ? "border-gold bg-gold/10"
                                             : "border-noir/12 hover:border-noir/30"
                                         }`}
                                       >
-                                        <span className="relative size-11 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
+                                        <span className="relative size-14 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
                                           <Image
                                             src={item.img}
                                             alt={item.name}
                                             fill
-                                            sizes="44px"
+                                            sizes="56px"
                                             className="graded object-cover"
                                           />
                                         </span>
                                         <span className="min-w-0 flex-1">
-                                          <span className="block truncate font-display text-base font-semibold text-noir">
+                                          <span className="block truncate font-display text-lg font-semibold text-noir">
                                             {item.name}
                                           </span>
-                                          <span className="font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                                          <span className="font-sans text-xs uppercase tracking-widest text-stone">
                                             {item.type}
                                           </span>
                                         </span>
                                         {selected && (
-                                          <Check className="size-4 shrink-0 text-gold" />
+                                          <Check className="size-5 shrink-0 text-gold" />
                                         )}
                                       </button>
                                     );
