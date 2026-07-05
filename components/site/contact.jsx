@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Check, ArrowRight, ArrowLeft, Mail } from "lucide-react";
+import { Send, Check, ArrowRight, ArrowLeft, Mail, ChevronDown } from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
 import { menu, menuCategories } from "@/lib/menu";
@@ -61,6 +61,7 @@ export default function Contact() {
   });
   const [crepeCat, setCrepeCat] = useState("classic");
   const [mode, setMode] = useState("guided"); // "guided" | "quick"
+  const [quickBrowse, setQuickBrowse] = useState(false);
 
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
   const toggleCrepe = (name) =>
@@ -77,6 +78,19 @@ export default function Contact() {
         ? d.iceCream.filter((x) => x !== f)
         : [...d.iceCream, f],
     }));
+  // Quick inquiry: tapping a crêpe in the browse panel adds/removes it from the
+  // free-text field, so people can type OR pick — both feed the same answer.
+  const toggleQuickCrepe = (name) =>
+    setData((d) => {
+      const list = d.quickCrepes
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const next = list.includes(name)
+        ? list.filter((x) => x !== name)
+        : [...list, name];
+      return { ...d, quickCrepes: next.join(", ") };
+    });
 
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
   const contactOk =
@@ -883,6 +897,96 @@ export default function Contact() {
                           onChange={(e) => set("quickCrepes", e.target.value)}
                           className={`${field} mt-1.5`}
                         />
+                        <button
+                          type="button"
+                          onClick={() => setQuickBrowse((v) => !v)}
+                          className="mt-2 inline-flex items-center gap-1.5 font-sans text-sm font-medium text-espresso underline-offset-2 transition-colors hover:text-gold"
+                        >
+                          <ChevronDown
+                            className={`size-4 transition-transform duration-300 ${
+                              quickBrowse ? "rotate-180" : ""
+                            }`}
+                          />
+                          {quickBrowse ? "Hide the menu" : "Not sure? Browse the menu"}
+                        </button>
+
+                        <AnimatePresence initial={false}>
+                          {quickBrowse && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="overflow-hidden"
+                            >
+                              <div className="mt-3 rounded-lg border border-noir/12 bg-ivory p-3">
+                                {/* Tier filter */}
+                                <div className="flex flex-wrap gap-2">
+                                  {menuCategories.map((c) => (
+                                    <button
+                                      type="button"
+                                      key={c.id}
+                                      onClick={() => setCrepeCat(c.id)}
+                                      className={`rounded-full px-3.5 py-1.5 font-sans text-xs transition-all duration-200 ${
+                                        crepeCat === c.id
+                                          ? "bg-noir text-ivory"
+                                          : "border border-noir/15 text-espresso/80 hover:border-noir/40"
+                                      }`}
+                                    >
+                                      {c.label}
+                                    </button>
+                                  ))}
+                                </div>
+                                {/* Crêpe list with photos — tap to add above */}
+                                <div className="mt-3 max-h-72 space-y-1.5 overflow-y-auto pr-1">
+                                  {menu[crepeCat].map((item) => {
+                                    const selected = data.quickCrepes
+                                      .split(",")
+                                      .map((s) => s.trim())
+                                      .includes(item.name);
+                                    return (
+                                      <button
+                                        type="button"
+                                        key={item.name}
+                                        onClick={() => toggleQuickCrepe(item.name)}
+                                        className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border p-2 text-left transition-colors duration-200 ${
+                                          selected
+                                            ? "border-gold bg-gold/10"
+                                            : "border-noir/12 hover:border-noir/30"
+                                        }`}
+                                      >
+                                        <span className="relative size-11 shrink-0 overflow-hidden rounded-md ring-1 ring-noir/10">
+                                          <Image
+                                            src={item.img}
+                                            alt={item.name}
+                                            fill
+                                            sizes="44px"
+                                            className="graded object-cover"
+                                          />
+                                        </span>
+                                        <span className="min-w-0 flex-1">
+                                          <span className="block truncate font-display text-base font-semibold text-noir">
+                                            {item.name}
+                                          </span>
+                                          <span className="font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                                            {item.type}
+                                          </span>
+                                        </span>
+                                        {selected && (
+                                          <Check className="size-4 shrink-0 text-gold" />
+                                        )}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                                <p className="mt-2 font-sans text-xs text-stone">
+                                  Tap any crêpe to add it above. Still unsure? Just leave
+                                  &ldquo;help me choose&rdquo;.
+                                </p>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                       <div>
                         <label className="font-sans text-sm text-espresso/80">
