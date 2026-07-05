@@ -7,7 +7,7 @@
 /* ============================================================
    ROYAL FRENCH CRÊPE — Parisian premium design system
    Palette: warm ivory cream · espresso noir · brushed gold · bordeaux
-   Type: Playfair Display (display) · Cormorant Garamond (serif) · Geist (sans)
+   Type: Hanken Grotesk everywhere — clean, warm, highly readable (real italics)
    ============================================================ */
 
 @theme inline {
@@ -88,6 +88,13 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Nudge the whole type scale up for easier reading (default is 16px). */
+    font-size: 17px;
+  }
+  @media (min-width: 640px) {
+    html {
+      font-size: 17.5px;
+    }
   }
   ::selection {
     background: var(--gold);

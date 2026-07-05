@@ -1,4 +1,4 @@
-import { Playfair_Display, Cormorant_Garamond, Geist } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/site/smooth-scroll";
 import Cursor from "@/components/site/cursor";
@@ -6,23 +6,29 @@ import Preloader from "@/components/site/preloader";
 import ScrollProgress from "@/components/site/scroll-progress";
 import { faqs } from "@/lib/faq";
 
-const playfair = Playfair_Display({
+// One clean, warm, highly-readable family across the whole site (with real
+// italics for the elegant accents). Hierarchy comes from weight + size.
+const display = Hanken_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["500", "600", "700", "800"],
   style: ["normal", "italic"],
+  display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const serif = Hanken_Grotesk({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geist = Geist({
+const geist = Hanken_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -174,7 +180,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${cormorant.variable} ${geist.variable} h-full antialiased`}
+      className={`${display.variable} ${serif.variable} ${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-noir">
         <script
