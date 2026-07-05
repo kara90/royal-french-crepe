@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Check, ArrowRight, ArrowLeft } from "lucide-react";
+import { Send, Check, ArrowRight, ArrowLeft, Mail } from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
 import { menu, menuCategories } from "@/lib/menu";
@@ -56,8 +56,11 @@ export default function Contact() {
     phone: "",
     callbackDay: "",
     callbackTime: "",
+    quickCrepes: "",
+    quickEvent: "",
   });
   const [crepeCat, setCrepeCat] = useState("classic");
+  const [mode, setMode] = useState("guided"); // "guided" | "quick"
 
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
   const toggleCrepe = (name) =>
@@ -93,6 +96,14 @@ export default function Contact() {
     step === 3 ||
     (step === 4 && contactOk);
 
+  // Quick inquiry: name + email + a line about crêpes + a line about the event.
+  const quickOk =
+    data.firstName.trim() &&
+    data.lastName.trim() &&
+    emailOk &&
+    data.quickCrepes.trim() &&
+    data.quickEvent.trim();
+
   const KEY = site.web3formsKey;
   const useWeb3 = KEY && !KEY.includes("PASTE");
 
@@ -102,81 +113,15 @@ export default function Contact() {
     )}&body=${encodeURIComponent(body)}`;
   };
 
-  const submit = async (e) => {
-    e.preventDefault();
-    // Bare minimum: never send without a first name, last name and valid email.
-    if (!contactOk) return;
-    const fullName = `${data.firstName} ${data.lastName}`.trim();
-    const eventTimeStr = data.timeTbd
-      ? "Not sure yet (still planning)"
-      : `${to12h(data.startTime)} – ${to12h(data.endTime)} (base 2 hrs)`;
-    const subject = `Catering inquiry — ${data.occasion || "Event"}${
-      fullName ? ` (${fullName})` : ""
-    }`;
-    const callbackLines = data.callback
-      ? [
-          "",
-          "Wants a callback: YES",
-          `Phone: ${data.phone || "—"}`,
-          `Preferred day: ${data.callbackDay || "—"}`,
-          `Preferred time: ${to12h(data.callbackTime)}`,
-        ]
-      : ["", "Wants a callback: No"];
-    const body = [
-      `Occasion: ${data.occasion}`,
-      `Date: ${data.date || "—"}`,
-      `Event time: ${eventTimeStr}`,
-      `Guests: ${data.guests}`,
-      `Location: ${data.location || "—"}`,
-      `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
-      `Natural ice cream: ${
-        data.iceCream.length ? data.iceCream.join(", ") : "Not requested"
-      }`,
-      "",
-      `Name: ${fullName}`,
-      `Email: ${data.email}`,
-      ...callbackLines,
-      "",
-      "What they want:",
-      data.message || "—",
-    ].join("\n");
-
-    // No key yet → fall back to the visitor's email app.
+  // Shared delivery: Web3Forms → inbox, with a mailto fallback that never loses a lead.
+  const sendToInbox = async ({ subject, body, payload }) => {
     if (!useWeb3) {
       openMailto(subject, body);
       setSent(true);
       return;
     }
-
-    // Send straight to the inbox via Web3Forms.
     setSending(true);
     try {
-      const payload = {
-        access_key: KEY,
-        subject,
-        from_name: "Royal French Crêpe — Website",
-        replyto: data.email,
-        botcheck: "",
-        Occasion: data.occasion,
-        Date: data.date || "—",
-        "Event time": eventTimeStr,
-        Guests: data.guests,
-        Location: data.location || "—",
-        "Crêpes wanted": data.crepes.join(", ") || "—",
-        "Natural ice cream": data.iceCream.length
-          ? data.iceCream.join(", ")
-          : "Not requested",
-        "First name": data.firstName,
-        "Last name": data.lastName,
-        Email: data.email,
-        "Wants a callback": data.callback ? "Yes" : "No",
-        "What they want": data.message || "—",
-      };
-      if (data.callback) {
-        payload.Phone = data.phone;
-        payload["Callback day"] = data.callbackDay || "—";
-        payload["Callback time"] = to12h(data.callbackTime);
-      }
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -195,6 +140,112 @@ export default function Contact() {
     } finally {
       setSending(false);
     }
+  };
+
+  // Guided inquiry — the full, everything-we-need submission (no back-and-forth).
+  const submit = (e) => {
+    e.preventDefault();
+    if (!contactOk) return;
+    const fullName = `${data.firstName} ${data.lastName}`.trim();
+    const eventTimeStr = data.timeTbd
+      ? "Not sure yet (still planning)"
+      : `${to12h(data.startTime)} – ${to12h(data.endTime)} (base 2 hrs)`;
+    const subject = `Catering inquiry (Guided) — ${data.occasion || "Event"}${
+      fullName ? ` (${fullName})` : ""
+    }`;
+    const callbackLines = data.callback
+      ? [
+          "",
+          "Wants a callback: YES",
+          `Phone: ${data.phone || "—"}`,
+          `Preferred day: ${data.callbackDay || "—"}`,
+          `Preferred time: ${to12h(data.callbackTime)}`,
+        ]
+      : ["", "Wants a callback: No"];
+    const body = [
+      "Inquiry type: Guided (complete)",
+      "",
+      `Occasion: ${data.occasion}`,
+      `Date: ${data.date || "—"}`,
+      `Event time: ${eventTimeStr}`,
+      `Guests: ${data.guests}`,
+      `Location: ${data.location || "—"}`,
+      `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
+      `Natural ice cream: ${
+        data.iceCream.length ? data.iceCream.join(", ") : "Not requested"
+      }`,
+      "",
+      `Name: ${fullName}`,
+      `Email: ${data.email}`,
+      ...callbackLines,
+      "",
+      "What they want:",
+      data.message || "—",
+    ].join("\n");
+    const payload = {
+      access_key: KEY,
+      subject,
+      from_name: "Royal French Crêpe — Website",
+      replyto: data.email,
+      botcheck: "",
+      "Inquiry type": "Guided (complete)",
+      Occasion: data.occasion,
+      Date: data.date || "—",
+      "Event time": eventTimeStr,
+      Guests: data.guests,
+      Location: data.location || "—",
+      "Crêpes wanted": data.crepes.join(", ") || "—",
+      "Natural ice cream": data.iceCream.length
+        ? data.iceCream.join(", ")
+        : "Not requested",
+      "First name": data.firstName,
+      "Last name": data.lastName,
+      Email: data.email,
+      "Wants a callback": data.callback ? "Yes" : "No",
+      "What they want": data.message || "—",
+    };
+    if (data.callback) {
+      payload.Phone = data.phone;
+      payload["Callback day"] = data.callbackDay || "—";
+      payload["Callback time"] = to12h(data.callbackTime);
+    }
+    sendToInbox({ subject, body, payload });
+  };
+
+  // Quick inquiry — the minimum essentials; we may follow up for the rest.
+  const submitQuick = (e) => {
+    e.preventDefault();
+    if (!quickOk) return;
+    const fullName = `${data.firstName} ${data.lastName}`.trim();
+    const subject = `Catering inquiry (Quick) — ${fullName}`;
+    const body = [
+      "Inquiry type: Quick (essentials — may need follow-up)",
+      "",
+      `Name: ${fullName}`,
+      `Email: ${data.email}`,
+      `Phone: ${data.phone || "—"}`,
+      `Crêpes wanted: ${data.quickCrepes}`,
+      `Event date, time & location: ${data.quickEvent}`,
+      "",
+      "What they want:",
+      data.message || "—",
+    ].join("\n");
+    const payload = {
+      access_key: KEY,
+      subject,
+      from_name: "Royal French Crêpe — Website",
+      replyto: data.email,
+      botcheck: "",
+      "Inquiry type": "Quick (essentials)",
+      "First name": data.firstName,
+      "Last name": data.lastName,
+      Email: data.email,
+      Phone: data.phone || "—",
+      "Crêpes wanted": data.quickCrepes,
+      "Event date, time & location": data.quickEvent,
+      "What they want": data.message || "—",
+    };
+    sendToInbox({ subject, body, payload });
   };
 
   const field =
@@ -226,6 +277,15 @@ export default function Contact() {
             </p>
 
             <div className="mt-8 space-y-3">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="flex items-center gap-3 font-sans text-base text-espresso transition-colors hover:text-gold"
+              >
+                <span className="inline-flex size-10 items-center justify-center rounded-full border border-noir/15">
+                  <Mail className="size-4" />
+                </span>
+                {EMAIL}
+              </a>
               <a
                 href={site.instagram}
                 target="_blank"
@@ -273,16 +333,62 @@ export default function Contact() {
                 </p>
               </div>
             ) : (
-              <form
-                onSubmit={submit}
-                onKeyDown={(e) => {
-                  // Never let Enter submit or skip steps — only the buttons advance.
-                  if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
-                    e.preventDefault();
-                  }
-                }}
-              >
-                {/* Progress */}
+              <>
+                {/* Two ways to reach us — guided (recommended) or quick */}
+                <div className="mb-7 grid gap-3 sm:grid-cols-2">
+                  <button
+                    type="button"
+                    onClick={() => setMode("guided")}
+                    className={`rounded-xl border p-4 text-left transition-all duration-200 ${
+                      mode === "guided"
+                        ? "border-gold bg-gold/10 ring-1 ring-gold"
+                        : "border-noir/15 bg-ivory hover:border-noir/30"
+                    }`}
+                  >
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="font-display text-base font-semibold text-noir">
+                        Guided inquiry
+                      </span>
+                      <span className="shrink-0 rounded-full bg-gold px-2 py-0.5 font-sans text-[0.62rem] font-semibold uppercase tracking-wider text-noir">
+                        Recommended
+                      </span>
+                    </span>
+                    <span className="mt-1.5 block font-serif text-sm leading-snug text-espresso/80">
+                      A few quick questions so we have everything — the fastest way to
+                      a firm quote, with no back-and-forth.
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setMode("quick")}
+                    className={`rounded-xl border p-4 text-left transition-all duration-200 ${
+                      mode === "quick"
+                        ? "border-gold bg-gold/10 ring-1 ring-gold"
+                        : "border-noir/15 bg-ivory hover:border-noir/30"
+                    }`}
+                  >
+                    <span className="font-display text-base font-semibold text-noir">
+                      Quick inquiry
+                    </span>
+                    <span className="mt-1.5 block font-serif text-sm leading-snug text-espresso/80">
+                      In a hurry? Just your crêpes, date &amp; location. Faster to send —
+                      but we may follow up for a few details.
+                    </span>
+                  </button>
+                </div>
+
+                {mode === "guided" ? (
+                  <form
+                    onSubmit={submit}
+                    onKeyDown={(e) => {
+                      // Never let Enter submit or skip steps — only the buttons advance.
+                      if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    {/* Progress */}
                 <div className="mb-7 flex items-center gap-2">
                   {STEPS.map((s, i) => (
                     <div key={s} className="flex flex-1 flex-col gap-1.5">
@@ -711,8 +817,122 @@ export default function Contact() {
                       <Send className="size-4" />
                     </button>
                   )}
-                </div>
-              </form>
+                    </div>
+                  </form>
+                ) : (
+                  <form
+                    onSubmit={submitQuick}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    <div className="space-y-4">
+                      <h3 className="font-display text-xl font-semibold text-noir">
+                        Send us the essentials
+                      </h3>
+                      <p className="-mt-1 font-serif text-base text-espresso/80">
+                        We&apos;ll reply within a day. Not sure of a detail yet? Just say
+                        so — we&apos;ll figure it out together.
+                      </p>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <input
+                          required
+                          placeholder="First name *"
+                          value={data.firstName}
+                          onChange={(e) => set("firstName", e.target.value)}
+                          className={field}
+                        />
+                        <input
+                          required
+                          placeholder="Last name *"
+                          value={data.lastName}
+                          onChange={(e) => set("lastName", e.target.value)}
+                          className={field}
+                        />
+                      </div>
+                      <input
+                        required
+                        type="email"
+                        placeholder="Email *"
+                        value={data.email}
+                        onChange={(e) => set("email", e.target.value)}
+                        className={field}
+                      />
+                      <p className="-mt-1.5 font-serif text-sm text-espresso/80">
+                        Please give us your{" "}
+                        <span className="font-semibold text-espresso">best email</span> —
+                        it&apos;s how we&apos;ll reach you with your quote.
+                      </p>
+                      <input
+                        type="tel"
+                        placeholder="Phone (optional)"
+                        value={data.phone}
+                        onChange={(e) => set("phone", e.target.value)}
+                        className={field}
+                      />
+                      <div>
+                        <label className="font-sans text-sm text-espresso/80">
+                          Which crêpes are you thinking? *
+                        </label>
+                        <input
+                          required
+                          placeholder="e.g. Marie Antoinette, La Gourmande — or 'help me choose'"
+                          value={data.quickCrepes}
+                          onChange={(e) => set("quickCrepes", e.target.value)}
+                          className={`${field} mt-1.5`}
+                        />
+                      </div>
+                      <div>
+                        <label className="font-sans text-sm text-espresso/80">
+                          Event date, time &amp; location *
+                        </label>
+                        <input
+                          required
+                          placeholder="e.g. Sat Aug 9, 5–7pm, Malibu — or 'still deciding'"
+                          value={data.quickEvent}
+                          onChange={(e) => set("quickEvent", e.target.value)}
+                          className={`${field} mt-1.5`}
+                        />
+                      </div>
+                      <textarea
+                        rows={3}
+                        placeholder="Anything else? (optional)"
+                        value={data.message}
+                        onChange={(e) => set("message", e.target.value)}
+                        className={`${field} resize-none`}
+                      />
+                      {!quickOk && (
+                        <p className="font-sans text-sm text-red-700/80">
+                          Add your name, a valid email, your crêpes and event details to
+                          send.
+                        </p>
+                      )}
+                      <div className="flex flex-col-reverse gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="font-serif text-sm italic text-stone">
+                          Want a one-and-done quote?{" "}
+                          <button
+                            type="button"
+                            onClick={() => setMode("guided")}
+                            className="font-semibold not-italic text-espresso underline-offset-2 hover:text-gold hover:underline"
+                          >
+                            Use the guided inquiry
+                          </button>
+                        </p>
+                        <button
+                          type="submit"
+                          disabled={sending || !quickOk}
+                          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 font-sans text-sm font-semibold uppercase tracking-wider text-noir transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-gold/25 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:shadow-none"
+                        >
+                          {sending ? "Sending…" : "Send"}
+                          <Send className="size-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+              </>
             )}
           </div>
         </div>

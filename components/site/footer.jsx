@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Mail } from "lucide-react";
 import { Instagram } from "./icons";
 import Tricolor from "./tricolor";
 
@@ -62,6 +63,14 @@ export default function Footer() {
                 Get in touch
               </h3>
               <ul className="mt-4 space-y-2.5">
+                <li>
+                  <a
+                    href="mailto:royalfrenchcrepe@gmail.com"
+                    className="flex items-center gap-2 font-serif text-base text-ivory/86 transition-colors hover:text-gold"
+                  >
+                    <Mail className="size-4" /> royalfrenchcrepe@gmail.com
+                  </a>
+                </li>
                 <li>
                   <a
                     href="https://www.instagram.com/royalfrenchcrepe/"
