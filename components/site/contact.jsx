@@ -239,6 +239,9 @@ export default function Contact() {
       `Email: ${data.email}`,
       `Phone: ${data.phone || "—"}`,
       `Crêpes wanted: ${data.quickCrepes}`,
+      `Natural ice cream: ${
+        data.iceCream.length ? data.iceCream.join(", ") : "Not requested"
+      }`,
       `Event date, time & location: ${data.quickEvent}`,
       "",
       "What they want:",
@@ -256,6 +259,9 @@ export default function Contact() {
       Email: data.email,
       Phone: data.phone || "—",
       "Crêpes wanted": data.quickCrepes,
+      "Natural ice cream": data.iceCream.length
+        ? data.iceCream.join(", ")
+        : "Not requested",
       "Event date, time & location": data.quickEvent,
       "What they want": data.message || "—",
     };
@@ -998,6 +1004,33 @@ export default function Contact() {
                           )}
                         </AnimatePresence>
                       </div>
+                      {/* Optional natural ice cream — same as the guided inquiry */}
+                      <div className="rounded-lg border border-noir/12 bg-ivory p-4">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-display text-base font-semibold text-noir">
+                            Natural ice cream
+                          </span>
+                          <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                            Optional
+                          </span>
+                        </div>
+                        <p className="mt-1 font-serif text-sm text-stone">
+                          Add a scoop of natural ice cream — choose a flavor, or skip it.
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {iceCreamFlavors.map((f) => (
+                            <button
+                              type="button"
+                              key={f}
+                              onClick={() => toggleIceCream(f)}
+                              className={chip(data.iceCream.includes(f))}
+                            >
+                              {f}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
                       <div>
                         <label className="font-sans text-sm text-espresso/80">
                           Event date, time &amp; location *
