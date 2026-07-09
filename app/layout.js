@@ -83,10 +83,10 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image-royal.jpg",
         width: 1200,
         height: 630,
-        alt: "A signature Royal French Crêpe with strawberries, banana, ice cream and chocolate",
+        alt: "Royal French Crêpe — a crowned crêpe with ice cream, strawberries and banana before a French château",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const metadata = {
     title: "Royal French Crêpe — Authentic French Crêpes & Catering",
     description:
       "Handmade French crêpes & live crêpe-station catering across LA, Las Vegas & California. Since 2007.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image-royal.jpg"],
   },
 };
 
@@ -125,7 +125,7 @@ const jsonLd = {
       telephone: "+1-323-287-4274",
       email: "royalfrenchcrepe@gmail.com",
       image: [
-        "https://royalfrenchcrepe.com/og-image.jpg",
+        "https://royalfrenchcrepe.com/og-image-royal.jpg",
         "https://royalfrenchcrepe.com/images/menu/caviar-1.jpg",
         "https://royalfrenchcrepe.com/images/louis-xvi-feature.jpg",
       ],
