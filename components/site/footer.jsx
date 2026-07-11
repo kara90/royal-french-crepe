@@ -33,8 +33,8 @@ export default function Footer() {
               <p className="font-display text-2xl font-semibold">Royal French Crêpe</p>
             </span>
             <p className="mt-4 font-serif text-base leading-relaxed text-ivory/84">
-              Authentic premium French crêpes, handmade by French chefs from Paris —
-              now serving Los Angeles, Las Vegas &amp; events across California.
+              Authentic French crêpes, handmade by real French chefs from Paris — now
+              serving Los Angeles, Las Vegas and events across California and Nevada.
             </p>
           </div>
 

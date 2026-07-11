@@ -33,8 +33,8 @@ export default function Catering() {
             <div className="rule-gold mt-7 w-28" />
             <p className="mt-7 max-w-md font-serif text-lg leading-relaxed text-espresso/85">
               Our chefs bring the full Parisian experience to you — the griddle, the
-              show, the aroma, the crowd that gathers. We cater all around California
-              and accommodate any cultural, religious or dietary request.
+              show, the aroma, the crowd that gathers. We cater across California and
+              Nevada and accommodate any cultural, religious or dietary request.
             </p>
             <p className="mt-4 max-w-md font-serif text-base leading-relaxed text-stone">
               Every event is unique, so every quote is custom — tell us your date,

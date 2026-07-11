@@ -89,9 +89,9 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.25 }}
           className="mx-auto mt-7 max-w-xl font-serif text-lg leading-relaxed text-ivory/85 text-pretty sm:text-xl"
         >
-          Sweet, savory and Royal Ossetra caviar crêpes, handmade in front of your
-          guests by chefs from Paris. Catering weddings, parties &amp; events across
-          LA, Las Vegas and all of California.
+          Authentic French crêpes — sweet, savory and Royal Ossetra caviar — handmade
+          in front of your guests by real French chefs from Paris. Catering weddings,
+          parties &amp; events across Los Angeles, Las Vegas, California and Nevada.
         </motion.p>
 
         <motion.p
