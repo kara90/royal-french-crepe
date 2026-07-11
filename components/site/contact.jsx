@@ -3,7 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Check, ArrowRight, ArrowLeft, Mail, ChevronDown } from "lucide-react";
+import {
+  Send,
+  Check,
+  ArrowRight,
+  ArrowLeft,
+  Mail,
+  ChevronDown,
+  Heart,
+} from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
 import { menu, menuCategories } from "@/lib/menu";
@@ -742,6 +750,24 @@ export default function Contact() {
                           </p>
                         )}
 
+                        {/* Wedding-specific caution — callback is extra important */}
+                        {data.occasion === "Wedding" && (
+                          <div className="flex items-start gap-2.5 rounded-lg border border-bordeaux/35 bg-bordeaux/[0.06] px-4 py-3">
+                            <Heart className="mt-0.5 size-4 shrink-0 text-bordeaux" />
+                            <p className="font-serif text-sm leading-relaxed text-espresso">
+                              <span className="font-semibold text-noir">
+                                Planning a wedding?
+                              </span>{" "}
+                              A callback is{" "}
+                              <span className="font-semibold text-bordeaux">
+                                extremely recommended
+                              </span>{" "}
+                              — weddings have the most details to get exactly right, and a
+                              quick call makes sure nothing is missed on your big day.
+                            </p>
+                          </div>
+                        )}
+
                         {/* Callback opt-in — strongly recommended */}
                         <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-gold/45 bg-gold/[0.06] px-4 py-3.5">
                           <input
@@ -756,7 +782,9 @@ export default function Contact() {
                                 I&apos;d like a callback to talk it through
                               </span>
                               <span className="rounded-full bg-gold px-2 py-0.5 font-sans text-[0.65rem] font-semibold uppercase tracking-wider text-noir">
-                                Recommended
+                                {data.occasion === "Wedding"
+                                  ? "Extremely recommended"
+                                  : "Recommended"}
                               </span>
                             </span>
                             <span className="mt-1.5 block font-serif text-sm leading-relaxed text-espresso/80">
