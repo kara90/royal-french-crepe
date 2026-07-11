@@ -657,13 +657,19 @@ export default function Contact() {
                             <span className="font-display text-base font-semibold text-noir">
                               Natural ice cream
                             </span>
-                            <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
-                              Optional
+                            <span className="flex shrink-0 items-center gap-1.5">
+                              <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                                Optional
+                              </span>
+                              <span className="rounded-full bg-gold px-2 py-0.5 font-sans text-[0.7rem] font-semibold uppercase tracking-widest text-noir">
+                                Extra charge
+                              </span>
                             </span>
                           </div>
                           <p className="mt-1 font-serif text-sm text-stone">
-                            Add a scoop of natural ice cream — an optional add-on at an
-                            extra charge. Pick a flavor, or skip it.
+                            Add a scoop of natural ice cream — an optional add-on at an{" "}
+                            <span className="font-semibold text-espresso">extra charge</span>.
+                            Pick a flavor, or skip it.
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
                             {iceCreamFlavors.map((f) => (
@@ -1051,13 +1057,19 @@ export default function Contact() {
                           <span className="font-display text-base font-semibold text-noir">
                             Natural ice cream
                           </span>
-                          <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
-                            Optional
+                          <span className="flex shrink-0 items-center gap-1.5">
+                            <span className="rounded-full border border-noir/15 px-2 py-0.5 font-sans text-[0.7rem] uppercase tracking-widest text-stone">
+                              Optional
+                            </span>
+                            <span className="rounded-full bg-gold px-2 py-0.5 font-sans text-[0.7rem] font-semibold uppercase tracking-widest text-noir">
+                              Extra charge
+                            </span>
                           </span>
                         </div>
                         <p className="mt-1 font-serif text-sm text-stone">
-                          Add a scoop of natural ice cream — an optional add-on at an
-                          extra charge. Pick a flavor, or skip it.
+                          Add a scoop of natural ice cream — an optional add-on at an{" "}
+                          <span className="font-semibold text-espresso">extra charge</span>.
+                          Pick a flavor, or skip it.
                         </p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {iceCreamFlavors.map((f) => (
