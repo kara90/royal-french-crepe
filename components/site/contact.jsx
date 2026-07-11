@@ -45,6 +45,7 @@ export default function Contact() {
     endTime: "",
     timeTbd: false,
     guests: "",
+    guestsExact: "",
     location: "",
     crepes: [],
     iceCream: [],
@@ -103,7 +104,7 @@ export default function Contact() {
     (step === 0 && data.occasion) ||
     (step === 1 &&
       data.date &&
-      data.guests &&
+      (data.guests || data.guestsExact.trim()) &&
       data.location &&
       (data.timeTbd || (data.startTime && data.endTime))) ||
     (step === 2 && data.crepes.length) ||
@@ -164,6 +165,9 @@ export default function Contact() {
     const eventTimeStr = data.timeTbd
       ? "Not sure yet (still planning)"
       : `${to12h(data.startTime)} – ${to12h(data.endTime)} (base 2 hrs)`;
+    const guestsStr = data.guestsExact.trim()
+      ? `${data.guestsExact.trim()} guests${data.guests ? ` (${data.guests})` : ""}`
+      : data.guests;
     const subject = `Catering inquiry (Guided) — ${data.occasion || "Event"}${
       fullName ? ` (${fullName})` : ""
     }`;
@@ -182,7 +186,7 @@ export default function Contact() {
       `Occasion: ${data.occasion}`,
       `Date: ${data.date || "—"}`,
       `Event time: ${eventTimeStr}`,
-      `Guests: ${data.guests}`,
+      `Guests: ${guestsStr}`,
       `Location: ${data.location || "—"}`,
       `Crêpes wanted: ${data.crepes.join(", ") || "—"}`,
       `Natural ice cream: ${
@@ -206,7 +210,7 @@ export default function Contact() {
       Occasion: data.occasion,
       Date: data.date || "—",
       "Event time": eventTimeStr,
-      Guests: data.guests,
+      Guests: guestsStr,
       Location: data.location || "—",
       "Crêpes wanted": data.crepes.join(", ") || "—",
       "Natural ice cream": data.iceCream.length
@@ -534,6 +538,14 @@ export default function Contact() {
                               </button>
                             ))}
                           </div>
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="Know the exact number? Type it — e.g. 70"
+                            value={data.guestsExact}
+                            onChange={(e) => set("guestsExact", e.target.value)}
+                            className={`${field} mt-2.5`}
+                          />
                         </div>
                         <div>
                           <label className="font-sans text-sm text-espresso/80">
@@ -642,7 +654,8 @@ export default function Contact() {
                             </span>
                           </div>
                           <p className="mt-1 font-serif text-sm text-stone">
-                            Add a scoop of natural ice cream — choose a flavor, or skip it.
+                            Add a scoop of natural ice cream — an optional add-on at an
+                            extra charge. Pick a flavor, or skip it.
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
                             {iceCreamFlavors.map((f) => (
@@ -1015,7 +1028,8 @@ export default function Contact() {
                           </span>
                         </div>
                         <p className="mt-1 font-serif text-sm text-stone">
-                          Add a scoop of natural ice cream — choose a flavor, or skip it.
+                          Add a scoop of natural ice cream — an optional add-on at an
+                          extra charge. Pick a flavor, or skip it.
                         </p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {iceCreamFlavors.map((f) => (
