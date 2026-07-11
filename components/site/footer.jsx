@@ -96,14 +96,7 @@ export default function Footer() {
           </p>
           <p className="font-sans text-sm text-ivory/82">
             Designed, built &amp; managed by{" "}
-            <a
-              href="https://beyondtheedgestudio.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-ivory/80 underline-offset-2 transition-colors hover:text-gold hover:underline"
-            >
-              Beyond the Edge Studio
-            </a>
+            <span className="font-medium text-ivory/80">Beyond the Edge Studio</span>
           </p>
         </div>
       </div>
