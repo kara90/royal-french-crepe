@@ -5,6 +5,7 @@ const packages = [
   {
     french: "Les Douceurs",
     name: "The Sweet Station",
+    from: "$800",
     desc: "Five sweet crêpes of your choice — Nutella, fresh fruit, ice-cream classics. A dessert bar your guests will swarm.",
     includes: [
       "Any 5 sweet crêpes",
@@ -15,6 +16,7 @@ const packages = [
   {
     french: "Le Mélange",
     name: "The Classic Mix",
+    from: "$1,200",
     tag: "Most popular",
     desc: "Five crêpes, any blend of sweet and savory — the crowd-pleaser with something for every guest.",
     includes: [
@@ -26,6 +28,7 @@ const packages = [
   {
     french: "L'Expérience Royale",
     name: "The Full Experience",
+    from: "$1,800",
     desc: "The complete Parisian station — sweet & savory crêpes, natural ice cream, and hot drinks.",
     includes: [
       "Sweet & savory crêpes",
@@ -91,8 +94,13 @@ export default function Packages() {
                   ))}
                 </ul>
 
-                <p className="mt-auto pt-6 font-sans text-sm font-medium text-espresso/70">
-                  From $800 · custom-quoted to your guest count
+                <p className="mt-auto pt-6">
+                  <span className="font-display text-lg font-semibold text-noir">
+                    From {p.from}
+                  </span>
+                  <span className="mt-0.5 block font-sans text-xs text-stone">
+                    custom-quoted to your guest count
+                  </span>
                 </p>
               </div>
             </Reveal>
