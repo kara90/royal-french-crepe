@@ -10,6 +10,7 @@ import Caviar from "@/components/site/caviar";
 import Louis from "@/components/site/louis";
 import Heritage from "@/components/site/heritage";
 import Catering from "@/components/site/catering";
+import Packages from "@/components/site/packages";
 import Gallery from "@/components/site/gallery";
 import KineticBand from "@/components/site/kinetic-band";
 import Locations from "@/components/site/locations";
@@ -37,6 +38,7 @@ export default function Home() {
         <Story />
         <Heritage />
         <Catering />
+        <Packages />
         <HowItWorks />
         <Gallery />
         <KineticBand />

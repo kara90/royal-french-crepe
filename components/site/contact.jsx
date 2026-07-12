@@ -11,6 +11,7 @@ import {
   Mail,
   ChevronDown,
   Heart,
+  MessageCircle,
 } from "lucide-react";
 import { Instagram } from "./icons";
 import { site } from "@/lib/site";
@@ -304,11 +305,37 @@ export default function Contact() {
             <div className="rule-gold mt-7 w-28" />
             <p className="mt-7 max-w-md font-serif text-lg leading-relaxed text-espresso/85">
               Tell us about your event and we&apos;ll tailor a quote to your guest
-              count, menu and location. Every celebration is custom — there are no
-              fixed prices, just the experience you want. We reply within a day.
+              count, menu and location. Events start at{" "}
+              <span className="font-semibold text-noir">$800</span> and every
+              celebration is custom — you&apos;ll hear back within a day.
             </p>
 
+            <div className="mt-6 flex flex-wrap gap-2">
+              {[
+                "French chefs since 2007",
+                "100% natural · No GMOs",
+                "Free, no-obligation quote",
+                "Reply within a day",
+              ].map((b) => (
+                <span
+                  key={b}
+                  className="rounded-full border border-noir/12 bg-ivory px-3 py-1.5 font-sans text-xs text-espresso/80"
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
+
             <div className="mt-8 space-y-3">
+              <a
+                href="sms:+13232874274"
+                className="flex items-center gap-3 font-sans text-base text-espresso transition-colors hover:text-gold"
+              >
+                <span className="inline-flex size-10 items-center justify-center rounded-full border border-noir/15">
+                  <MessageCircle className="size-4" />
+                </span>
+                Text us for a fast quote
+              </a>
               <a
                 href={`mailto:${EMAIL}`}
                 className="flex items-center gap-3 font-sans text-base text-espresso transition-colors hover:text-gold"

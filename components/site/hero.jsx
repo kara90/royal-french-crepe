@@ -138,7 +138,7 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.55 }}
           className="mt-5 font-sans text-sm tracking-wide text-ivory/70"
         >
-          Custom-quoted for your event · we reply within a day
+          Events from $800 · custom-quoted · we reply within a day
         </motion.p>
 
         <motion.div

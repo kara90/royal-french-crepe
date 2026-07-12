@@ -61,7 +61,7 @@ export default function Catering() {
               Get your free quote
             </a>
             <p className="mt-4 font-sans text-sm text-stone">
-              Free &amp; custom-quoted · we reply within a day
+              Events from $800 · free &amp; custom-quoted · we reply within a day
             </p>
           </Reveal>
 
