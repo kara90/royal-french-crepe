@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useAnimationFrame,
+} from "framer-motion";
 import { X, ArrowLeft, ArrowRight, MoveHorizontal } from "lucide-react";
 import Reveal from "./reveal";
 
@@ -21,26 +26,58 @@ const shots = [
   { src: "/images/menu/caviar-2.jpg", cap: "L'Essence d'Ossetra" },
 ];
 
+// Duplicated once so the strip can loop back on itself seamlessly.
+const row = [...shots, ...shots];
+
 export default function Gallery() {
+  const sectionRef = useRef(null);
   const trackRef = useRef(null);
-  const dragged = useRef(false);
-  const [width, setWidth] = useState(0);
+  const x = useMotionValue(0);
+  const loop = useRef(0); // exact width of one full set (for a seamless wrap)
+  const paused = useRef(false); // hover / touch
+  const visible = useRef(false); // in viewport
+  const reduce = useRef(false);
   const [active, setActive] = useState(null);
 
   useEffect(() => {
+    reduce.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const measure = () => {
       const el = trackRef.current;
-      if (el) setWidth(el.scrollWidth - el.offsetWidth);
+      if (el && el.children.length > shots.length) {
+        loop.current =
+          el.children[shots.length].offsetLeft - el.children[0].offsetLeft;
+      }
     };
     measure();
+    const t = setTimeout(measure, 800); // re-measure once images settle
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+
+    const io = new IntersectionObserver(
+      ([e]) => (visible.current = e.isIntersecting),
+      { threshold: 0 }
+    );
+    if (sectionRef.current) io.observe(sectionRef.current);
+
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", measure);
+      io.disconnect();
+    };
   }, []);
 
-  const open = (i) => {
-    if (dragged.current) return;
-    setActive(i);
-  };
+  // Slow, continuous auto-slide — pauses on hover/touch, off-screen, or lightbox.
+  useAnimationFrame((_, delta) => {
+    if (reduce.current || paused.current || !visible.current || active !== null)
+      return;
+    if (!loop.current) return;
+    const speed = 0.03; // ~30px per second
+    let next = x.get() - speed * delta;
+    if (next <= -loop.current) next += loop.current;
+    x.set(next);
+  });
+
+  const open = (i) => setActive(i);
   const step = (d) => setActive((a) => (a + d + shots.length) % shots.length);
 
   useEffect(() => {
@@ -55,7 +92,10 @@ export default function Gallery() {
   }, [active]);
 
   return (
-    <section className="relative overflow-hidden bg-cream py-24 sm:py-32">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-cream py-24 sm:py-32"
+    >
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="flex items-end justify-between gap-6">
           <div>
@@ -65,27 +105,24 @@ export default function Gallery() {
             </h2>
           </div>
           <span className="hidden items-center gap-2 font-sans text-xs uppercase tracking-widest text-stone sm:flex">
-            <MoveHorizontal className="size-4 text-gold" /> Drag to explore
+            <MoveHorizontal className="size-4 text-gold" /> Hover to pause
           </span>
         </Reveal>
       </div>
 
-      <motion.div ref={trackRef} className="mt-12 cursor-grab overflow-hidden active:cursor-grabbing">
-        <motion.div
-          drag="x"
-          dragConstraints={{ right: 0, left: -width }}
-          dragElastic={0.08}
-          onDragStart={() => (dragged.current = true)}
-          onDragEnd={() => setTimeout(() => (dragged.current = false), 50)}
-          whileTap={{ cursor: "grabbing" }}
-          data-cursor="Drag"
-          className="flex gap-5 px-6"
-        >
-          {shots.map((s, i) => (
+      <div
+        className="mt-12 overflow-hidden"
+        onMouseEnter={() => (paused.current = true)}
+        onMouseLeave={() => (paused.current = false)}
+        onTouchStart={() => (paused.current = true)}
+        onTouchEnd={() => (paused.current = false)}
+      >
+        <motion.div ref={trackRef} style={{ x }} className="flex w-max gap-5 px-6">
+          {row.map((s, i) => (
             <button
-              key={s.src}
+              key={i}
               type="button"
-              onClick={() => open(i)}
+              onClick={() => open(i % shots.length)}
               data-cursor="View"
               className="group relative aspect-[3/4] w-64 shrink-0 overflow-hidden rounded-sm bg-noir sm:w-72"
             >
@@ -105,7 +142,7 @@ export default function Gallery() {
             </button>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Lightbox */}
       <AnimatePresence>
